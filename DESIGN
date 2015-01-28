@@ -13,9 +13,11 @@
 
 ### Organizations
 
+Organizations are nexus. Groups are nexus. What is a nexus? [Check it out](http://lyd.dario.im/nexus). Previous concepts are specific roles for nexus. Just to keep it simple, they will be different classes and groups will be called nexus, so they don't clash with Django Group model.
+
 One organization has a site under one domain. Organizations can be grouped under meta-organizations, where user identifies as <user>@<domain>.
 
-Organizations are composed by one or more groups. Groups can be hierarchical (with optional members "composition").
+Organizations are composed by one or more nexus. Nexus can be hierarchical (with optional members "composition").
 
 Every organization must be treated as external. Don't assume they may be hosted in the same instance.
 
