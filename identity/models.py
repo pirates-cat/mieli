@@ -9,9 +9,10 @@ class Organization(models.Model):
     # Domain aliases must be handled on HTTP server layer. Nginx recommended.
     domain = models.CharField(max_length=63*3)
     # Is a meta-organization?
-    meta = models.BooleanField()
+    meta = models.BooleanField(default=False)
 
 class Nexus(models.Model):
     organization = models.ForeignKey(Organization)
     name = models.CharField(max_length=128)
+    slug = models.SlugField()
     users = models.ManyToManyField(User)
