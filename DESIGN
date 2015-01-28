@@ -19,6 +19,10 @@ One organization has a site under one domain. Organizations can be grouped under
 
 Organizations are composed by one or more nexus. Nexus can be hierarchical (with optional members "composition").
 
+Default nexus are:
+
+- Administrators: somebody who manages/owns/coordinates the organization.
+
 Every organization must be treated as external. Don't assume they may be hosted in the same instance.
 
 ## Technical
