@@ -36,6 +36,7 @@ DEFAULT_APPS = (
 
 FIRST_PARTY_APPS = (
     'mieli',
+    'identity',
 )
 
 THIRD_PARTY_APPS = (
