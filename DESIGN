@@ -7,6 +7,7 @@
 - Keep Django as it is: don't customize it.
 - First, security. Second, convention. Third, beauty.
 - Modularize all the things!
+- Good code explains itself but awesome code has comments when needed.
 
 ## Bussiness
 
