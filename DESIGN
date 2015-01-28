@@ -1,0 +1,40 @@
+# Mieli's design
+
+## Core values
+
+- We love the command line: admin tools must have always a CLI counterpart even if Django admin can be used.
+- Keep it simple.
+- Keep Django as it is: don't customize it.
+- First, security. Second, convention. Third, beauty.
+- Modularize all the things!
+
+## Bussiness
+
+### Organizations
+
+One organization has a site under one domain. Organizations can be grouped under meta-organizations, where user identifies as <user>@<domain>.
+
+Organizations are composed by one or more groups. Groups can be hierarchical (with optional members "composition").
+
+Every organization must be treated as external. Don't assume they may be hosted in the same instance.
+
+## Technical
+
+### Process architecture
+
+Python can be a memory hog. As Mieli will become a core tool for liquid organizations, it must be cheap to deploy.
+
+We don't want to develop it in Go, in order to allow more people to contribute, Mieli will work as a single process, with no limit for auxiliary processes (cache, database, queues, etc) neither for setting it up as a pool of workers (clone processes) for horizontal scaling.
+
+Therefore we must take into account this in Mieli's features.
+
+### Multiple sites
+
+Mieli must support multiples sites, keeping them under a single process (or group of processes) but internally separated.
+
+Django support sites with SITE_ID mechanism but it doesn't relate properly with User model. Also, we want to keep sites apart from each other: no sharing users, privileges or any other info. If we follow a "you have one user per instance" policy under a multisite setup, a malicious admin could log in a different site on the same system just changing a user's password associated to both.
+
+At this point, we need a way to use Django's standard User model without customizing it. The "Simple Way" (TM) is to concatenate site's domain to the login name sent by the user.
+
+In this way, organizations can freely assign usernames with custom policies and it even opens up federation in a easy way.
+
