@@ -8,6 +8,8 @@
 - First, security. Second, convention. Third, beauty.
 - Modularize all the things!
 - Good code explains itself but awesome code has comments when needed.
+- Numeric ids are for foreign keys, not URLs.
+- (Almost) 100% test coverage or die.
 
 ## Bussiness
 
