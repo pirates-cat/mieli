@@ -22,10 +22,14 @@ TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'),)
 ALLOWED_HOSTS = []
 ROOT_URLCONF = 'mieli.urls'
 
+from django_mu.models import SiteID
+SITE_ID = SiteID()
+
 WSGI_APPLICATION = 'mieli.wsgi.application'
 
 # Installed apps
 DEFAULT_APPS = (
+    'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,6 +52,8 @@ INSTALLED_APPS = DEFAULT_APPS + FIRST_PARTY_APPS + THIRD_PARTY_APPS
 
 # Middleware classes
 MIDDLEWARE_CLASSES = (
+    'django_mu.middleware.MultiSiteMiddleware',
+    'django.contrib.sites.middleware.CurrentSiteMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',

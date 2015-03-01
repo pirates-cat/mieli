@@ -1,0 +1,13 @@
+coverage==3.7.1
+Django==1.7.5
+django-coverage==1.2.4
+django-mu==0.0.1
+django-plainpasswordhasher==0.3
+gunicorn==19.1.1
+httpie==0.8.0
+ipdb==0.8
+ipython==2.0.0
+psycopg2==2.5.4
+Pygments==2.0.2
+requests==2.5.1
+tldextract==1.5.1
