@@ -8,15 +8,13 @@ class Command(BaseCommand):
         make_option('--domain',
             dest='domain',
             help='Organization\'s domain'),
-        make_option('--name',
-            dest='name',
-            help='Public name for organization'),
     )
 
     def handle(self, *args, **options):
         opts = cli.clean_options(options)
         if 'domain' not in opts or opts['domain'] == None:
             raise CommandError('missing domain')
-        if organization.get(domain=opts['domain']):
-            raise CommandError('domain %s is already in use' % opts['domain'])
-        organization.create(**opts)
+        try:
+            organization.delete(**opts)
+        except Exception as e:
+            raise CommandError(e)

@@ -11,6 +11,16 @@ class Organization(models.Model):
     theme = models.CharField(max_length=32, default='default')
     # Is a meta-organization?
     meta = models.BooleanField(default=False)
+    # UID field: User's field used as unique identifier (30 chars due max. Oracle column name's length)
+    uid_field = models.CharField(max_length=30, default='email')
+
+    @property
+    def domain(self):
+        return self.site.domain
+
+    @property
+    def name(self):
+        return self.site.name
 
 class Nexus(models.Model):
     organization = models.ForeignKey(Organization)

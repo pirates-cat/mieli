@@ -41,6 +41,7 @@ DEFAULT_APPS = (
 FIRST_PARTY_APPS = (
     'mieli',
     'identity',
+    'agora',
 )
 
 THIRD_PARTY_APPS = (
@@ -150,3 +151,8 @@ LOGGING = {
         },
     }
 }
+
+from mieli import registry
+registry.autodiscover()
+
+AGORA_DEFAULT_KEY='canihazchangeplz?'
