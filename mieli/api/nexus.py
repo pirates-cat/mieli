@@ -1,5 +1,6 @@
 from identity.models import Nexus
 from django.db import transaction
+from django.conf import settings
 from mieli import registry
 
 def get(**kwargs):
@@ -26,3 +27,10 @@ def delete(**kwargs):
         raise Exception('unknown nexus')
     registry.invoke('nexus_delete', nexus=nexus)
     nexus.delete()
+
+def on_organization_creation(**kwargs):
+    organization = kwargs['organization']
+    main = get(name=settings.MAIN_NEXUS, organization=organization) # TODO name???
+    if main:
+        raise Exception("Main nexus '%s' already exists" % settings.MAIN_NEXUS)
+    create(settings.MAIN_NEXUS, organization)
