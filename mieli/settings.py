@@ -156,3 +156,8 @@ from mieli import registry
 registry.autodiscover()
 
 AGORA_DEFAULT_KEY='canihazchangeplz?'
+
+try:
+    from mieli import custom_settings
+except ImportError:
+    pass

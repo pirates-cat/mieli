@@ -1,10 +1,11 @@
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import CommandError
+from mieli.api import user as mieli_user
+from mieli.cli import MieliCommand
 from optparse import make_option
 from agora.api import user
-from mieli.api import user as mieli_user
-from mieli import cli
 
-class Command(BaseCommand):
+class Command(MieliCommand):
+    mandatory_options = ( 'domain', 'username' )
     option_list = BaseCommand.option_list + (
         make_option('--organization',
             dest='domain',
@@ -14,15 +15,8 @@ class Command(BaseCommand):
             help='User to sync. Organization will be appended'),
     )
 
-    def handle(self, *args, **options):
-        opts = cli.clean_options(options)
-        for mandatory_arg in ('domain', 'username'):
-            if mandatory_arg not in opts or opts[mandatory_arg] == None:
-                raise CommandError('missing %s' % mandatory_arg)
-        u = mieli_user.get(username='%s@%s' % (opts['username'], opts['domain']))
-        if u == None:
+    def invoke(self, *args, **options):
+        user_ = mieli_user.get(username='%s@%s' % (options['username'], options['domain']))
+        if user_ == None:
             raise CommandError('unknown user')
-        try:
-            user.create(u)
-        except Exception as e:
-            raise CommandError(e)
+        user.create(user_)

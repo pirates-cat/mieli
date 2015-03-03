@@ -1,9 +1,9 @@
-from django.core.management.base import BaseCommand, CommandError
+from mieli.cli import MieliCommand
 from optparse import make_option
 from agora.api import link
-from mieli import cli
 
-class Command(BaseCommand):
+class Command(MieliCommand):
+    mandatory_options = ( 'org_domain', 'url', 'user', 'token' )
     option_list = BaseCommand.option_list + (
         make_option('--organization',
             dest='org_domain',
@@ -19,12 +19,5 @@ class Command(BaseCommand):
             help='Authentication token'),
     )
 
-    def handle(self, *args, **options):
-        opts = cli.clean_options(options)
-        for mandatory_arg in ('org_domain', 'url', 'user', 'token'):
-            if mandatory_arg not in opts or opts[mandatory_arg] == None:
-                raise CommandError('missing %s' % mandatory_arg)
-        try:
-            link.create(**opts)
-        except Exception as e:
-            raise CommandError(e)
+    def invoke(self, *args, **options):
+        link.create(**options)

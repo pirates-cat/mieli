@@ -1,9 +1,10 @@
-from django.core.management.base import BaseCommand, CommandError
-from optparse import make_option
+from django.core.management.base import CommandError
 from mieli.api import user, organization
-from mieli import cli
+from mieli.cli import MieliCommand
+from optparse import make_option
 
-class Command(BaseCommand):
+class Command(MieliCommand):
+    mandatory_options = ( 'organization', 'username', 'email' )
     option_list = BaseCommand.option_list + (
         make_option('--organization',
             dest='organization',
@@ -16,17 +17,10 @@ class Command(BaseCommand):
             help='E-mail used to identify and contact user'),
     )
 
-    def handle(self, *args, **options):
-        opts = cli.clean_options(options)
-        for mandatory_option in ( 'organization', 'username', 'email'):
-            if mandatory_option not in opts or opts[mandatory_option] == None:
-                raise CommandError('missing %s' % mandatory_option)
-        domain=opts.pop('organization')
-        org = organization.get(domain=domain)
-        if org == None:
+    def invoke(self, *args, **options):
+        domain = options.pop('organization')
+        organization_ = organization.get(domain=domain)
+        if organization_ == None:
             raise CommandError('unknown organization')
-        opts['username'] = "%s@%s" % (opts['username'], org.domain)
-        try:
-            user.create(**opts)
-        except Exception as e:
-            raise CommandError(e)
+        options['username'] = "%s@%s" % (options['username'], organization_.domain)
+        user.create(**options)

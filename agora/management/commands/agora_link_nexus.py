@@ -1,9 +1,10 @@
-from django.core.management.base import BaseCommand, CommandError
-from optparse import make_option
+from django.core.management.base import CommandError
 from mieli.api import organization, nexus
-from mieli import cli
+from mieli.cli import MieliCommand
+from optparse import make_option
 
-class Command(BaseCommand):
+class Command(MieliCommand):
+    mandatory_options = ( 'domain', 'nexus' )
     option_list = BaseCommand.option_list + (
         make_option('--organization',
             dest='domain',
@@ -14,14 +15,7 @@ class Command(BaseCommand):
     )
 
     def handle(self, *args, **options):
-        opts = cli.clean_options(options)
-        for mandatory_arg in ('domain', 'nexus'):
-            if mandatory_arg not in opts or opts[mandatory_arg] == None:
-                raise CommandError('missing %s' % mandatory_arg)
-        o = organization.get(domain=opts['domain'])
-        if o == None:
+        organization_ = organization.get(domain=options['domain'])
+        if organization_ == None:
             raise CommandError('unknown organization')
-        try:
-            nexus.create(nexus, o)
-        except Exception as e:
-            raise CommandError(e)
+        nexus.create(nexus, organization_)
