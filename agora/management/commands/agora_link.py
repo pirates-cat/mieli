@@ -3,21 +3,33 @@ from optparse import make_option
 from agora.api import link
 
 class Command(MieliCommand):
-    mandatory_options = ( 'org_domain', 'url', 'user', 'token' )
-    option_list = BaseCommand.option_list + (
-        make_option('--organization',
+    def __init__(self):
+        super(self.__class__, self).__init__()
+        self.register_option(
+            '--domain',
+            dest='domain',
+            help='Organization\'s domain',
+            required=True)
+        self.register_option(
+            '--organization',
             dest='org_domain',
-            help='Organization\'s domain'),
-        make_option('--url',
+            help='Organization\'s domain',
+            required=True)
+        self.register_option(
+            '--url',
             dest='url',
-            help='Agora Voting destination base URL'),
-        make_option('--user',
+            help='Agora Voting destination base URL',
+            required=True)
+        self.register_option(
+            '--user',
             dest='user',
-            help='Authentication user'),
-        make_option('--token',
+            help='Authentication user',
+            required=True)
+        self.register_option(
+            '--token',
             dest='token',
-            help='Authentication token'),
-    )
+            help='Authentication token',
+            required=True)
 
     def invoke(self, *args, **options):
         link.create(**options)
