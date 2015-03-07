@@ -1,3 +1,4 @@
+awesome-slugify==1.6.2
 coverage==3.7.1
 Django==1.7.5
 django-coverage==1.2.4
@@ -9,5 +10,7 @@ ipdb==0.8
 ipython==2.0.0
 psycopg2==2.5.4
 Pygments==2.0.2
+regex==2014.12.24
 requests==2.5.1
 tldextract==1.5.1
+Unidecode==0.4.17

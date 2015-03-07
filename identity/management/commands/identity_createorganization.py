@@ -3,15 +3,17 @@ from mieli.api import organization
 from optparse import make_option
 
 class Command(MieliCommand):
-    mandatory_options = ( 'domain' )
-    option_list = BaseCommand.option_list + (
-        make_option('--domain',
+    def __init__(self):
+        super(self.__class__, self).__init__()
+        self.register_option(
+            '--domain',
             dest='domain',
-            help='Organization\'s domain'),
-        make_option('--name',
+            help='Organization\'s domain',
+            required=True)
+        self.register_option(
+            '--name',
             dest='name',
-            help='Public name for organization'),
-    )
+            help='Public name for organization')
 
     def invoke(self, *args, **options):
         organization.create(**options)

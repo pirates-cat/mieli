@@ -1,10 +1,25 @@
 from mieli.cli import MieliCommand
-from django.contrib.auth.models import User
+from mieli.api import nexus
+import slugify
 
 class Command(MieliCommand):
-    #args = '<slug> <name> <organization.tld>'
+    def __init__(self):
+        super(self.__class__, self).__init__()
+        self.register_option(
+            '--organization',
+            dest='domain',
+            help='Nexus organization',
+            required=True)
+        self.register_option(
+            '--name',
+            dest='name',
+            help='Nexus name',
+            required=True)
 
     def invoke(self, *args, **options):
-        # TODO check if organization exists
-        # TODO check if slug is free
-        pass
+        domain = options.pop('domain')
+        organization_ = organization.get(domain=domain)
+        if organization_ == None:
+            raise CommandError('unknown organization')
+        options['slug'] = slugify.slugify(options['name'])
+        nexus.create(**options)

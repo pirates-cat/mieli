@@ -5,15 +5,18 @@ from optparse import make_option
 from agora.api import user
 
 class Command(MieliCommand):
-    mandatory_options = ( 'domain', 'username' )
-    option_list = BaseCommand.option_list + (
-        make_option('--organization',
+    def __init__(self):
+        super(self.__class__, self).__init__()
+        self.register_option(
+            '--organization',
             dest='domain',
-            help='Organization\'s domain'),
-        make_option('--username',
+            help='Nexus organization',
+            required=True)
+        self.register_option(
+            '--username',
             dest='username',
-            help='User to sync. Organization will be appended'),
-    )
+            help='User to sync. Organization will be appended',
+            required=True)
 
     def invoke(self, *args, **options):
         user_ = mieli_user.get(username='%s@%s' % (options['username'], options['domain']))

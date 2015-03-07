@@ -35,14 +35,28 @@ def autodiscover():
         # to bubble up.
         import_module("%s.mli" % app)
 
-def register(hook, hook_function):
-    if not hook in __instance:
-        __instance[hook] = []
-    __instance[hook].append(hook_function)
+# Hooks are functions executed after an event is signaled.
+# They are intended to execute additional required actions.
+# Any modification on arguments will be ignored.
+def add_hook(event, hook):
+    if not event in __instance:
+        __instance[event] = []
+    __instance[event].append(hook)
 
-def invoke(hook, **kwargs):
-    if not hook in __instance:
+def signal(event, **kwargs):
+    if not event in __instance:
         return
-    for hook_function in __instance[hook]:
+    for hook in __instance[event]:
         # TODO check if module's function is active
-        hook_function(**kwargs)
+        hook(**kwargs)
+
+# Filters are functions executed to allow customization
+# of values used later.
+# Functions must return **kwargs.
+def add_filter(id_, filter_function):
+    # TODO
+    pass
+
+def apply_filter(id_, filter_function):
+    # TODO
+    pass

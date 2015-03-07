@@ -4,18 +4,23 @@ from mieli.cli import MieliCommand
 from optparse import make_option
 
 class Command(MieliCommand):
-    mandatory_options = ( 'organization', 'username', 'email' )
-    option_list = BaseCommand.option_list + (
-        make_option('--organization',
-            dest='organization',
-            help='Organization where created user will belong'),
-        make_option('--username',
+    def __init__(self):
+        super(self.__class__, self).__init__()
+        self.register_option(
+            '--organization',
+            dest='domain',
+            help='Organization where created user will belong',
+            required=True)
+        self.register_option(
+            '--username',
             dest='username',
-            help='Username; it will have organization.tld appended'),
-        make_option('--email',
+            help='Username; it will have organization.tld appended',
+            required=True)
+        self.register_option(
+            '--email',
             dest='email',
-            help='E-mail used to identify and contact user'),
-    )
+            help='E-mail used to identify and contact user',
+            required=True)
 
     def invoke(self, *args, **options):
         domain = options.pop('organization')

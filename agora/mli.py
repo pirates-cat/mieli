@@ -1,5 +1,5 @@
 from mieli import registry
-from agora.api import user, agora
+from agora.api import agora_, user
 
-registry.register('user_create', user.create)
-registry.register('nexus_create', agora.create)
+registry.add_hook('user_create', user.create)
+registry.add_hook('nexus_create', agora_.create)
