@@ -1,6 +1,7 @@
 from mieli.cli import MieliCommand
 from mieli.api import organization
 from optparse import make_option
+from mieli import registry
 
 class Command(MieliCommand):
     def __init__(self):
@@ -13,7 +14,9 @@ class Command(MieliCommand):
         self.register_option(
             '--name',
             dest='name',
-            help='Public name for organization')
+            help='Public name for organization',
+            required=True)
+        registry.apply_filter('createorganization_cli_options', command=self)
 
     def invoke(self, *args, **options):
         organization.create(**options)

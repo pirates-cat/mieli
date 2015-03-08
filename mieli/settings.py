@@ -152,12 +152,15 @@ LOGGING = {
     }
 }
 
-from mieli import registry
-registry.autodiscover()
-
-AGORA_DEFAULT_KEY='canihazchangeplz?'
+# Mieli
+MAIN_NEXUS = 'Main'
+AGORA_ADMIN_USER = 'agora'
+AGORA_DEFAULT_KEY = 'canihazchangeplz?'
 
 try:
-    from mieli import custom_settings
+    from mieli.custom_settings import *
 except ImportError:
     pass
+
+from mieli import registry
+registry.autodiscover()

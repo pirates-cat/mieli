@@ -1,5 +1,5 @@
 from mieli.cli import MieliCommand
-from mieli.api import nexus
+from mieli.api import nexus, organization
 import slugify
 
 class Command(MieliCommand):
@@ -21,5 +21,5 @@ class Command(MieliCommand):
         organization_ = organization.get(domain=domain)
         if organization_ == None:
             raise CommandError('unknown organization')
-        options['slug'] = slugify.slugify(options['name'])
+        options['organization'] = organization_
         nexus.create(**options)

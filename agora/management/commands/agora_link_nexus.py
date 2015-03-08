@@ -1,5 +1,6 @@
 from django.core.management.base import CommandError
 from mieli.api import organization, nexus
+from agora.api import agora_
 from mieli.cli import MieliCommand
 from optparse import make_option
 import slugify
@@ -20,11 +21,11 @@ class Command(MieliCommand):
 
     def invoke(self, *args, **options):
         domain = options['domain']
-        name = slugify.slugify(options['nexus'])
+        slug = slugify.slugify(options['nexus'], to_lower=True)
         organization_ = organization.get(domain=domain)
         if organization_ == None:
             raise CommandError("unknown organization '%s'" % domain)
-        nexus_ = nexus.get(slug=nexus, organization=organization_)
+        nexus_ = nexus.get(slug=slug, organization=organization_)
         if nexus_ == None:
-            raise CommandError("unknown nexus '%s'" % name)
-        agora.create(nexus_)
+            raise CommandError("unknown nexus '%s'" % slug)
+        agora_.create(nexus_)

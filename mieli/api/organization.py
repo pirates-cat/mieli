@@ -30,7 +30,7 @@ def get_by_username(username):
     return get(**query)
 
 @transaction.atomic
-def create(domain, name):
+def create(domain, name, **kwargs):
     if get(domain=domain):
         raise Exception('domain %s is already in use' % domain)
     site = Site(domain=domain, name=name)
@@ -39,7 +39,7 @@ def create(domain, name):
     organization = Organization(site=site)
     organization.full_clean()
     organization.save()
-    registry.invoke('organization_create', organization=organization)
+    registry.signal('organization_create', organization=organization, **kwargs)
     return organization
 
 @transaction.atomic
@@ -47,5 +47,5 @@ def delete(**kwargs):
     organization = get(**kwargs)
     if organization == None:
         raise Exception('unknown organization')
-    registry.invoke('organization_delete', organization=organization)
+    registry.signal('organization_delete', organization=organization, **kwargs)
     organization.site.delete()

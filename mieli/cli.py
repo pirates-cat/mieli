@@ -17,7 +17,10 @@ class MieliCommand(BaseCommand):
     option_list = BaseCommand.option_list 
 
     def register_option(self, *opts, **attrs):
-        required = attrs.pop('required')
+        try:
+            required = attrs.pop('required')
+        except KeyError:
+            required = False
         option = make_option(*opts, **attrs)
         self.option_list += (option,)
         if required:

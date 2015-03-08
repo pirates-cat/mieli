@@ -29,7 +29,7 @@ def create(username, email, send_invitation=False):
     user = User(**kwargs)
     user.full_clean()
     user.save()
-    registry.invoke('user_create', user=user)
+    registry.signal('user_create', user=user)
     if send_invitation:
         # TODO send notification
         pass
@@ -39,7 +39,7 @@ def delete(**kwargs):
     user = get(**kwargs)
     if user == None:
         raise Exception('unknown user')
-    registry.invoke('user_delete', user=user)
+    registry.signal('user_delete', user=user)
     user.delete()
 
 def delete_all(**kwargs):

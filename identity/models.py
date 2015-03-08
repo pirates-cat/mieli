@@ -1,3 +1,4 @@
+from mieli import registry
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
@@ -27,3 +28,7 @@ class Nexus(models.Model):
     name = models.CharField(max_length=128)
     slug = models.SlugField()
     users = models.ManyToManyField(User)
+
+    def join(self, user):
+        self.users.add(user)
+        registry.signal('user_join', user=user, nexus=self)

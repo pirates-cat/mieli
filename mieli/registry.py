@@ -34,11 +34,14 @@ def autodiscover():
         # Step 3: import the app's mieli file. If this has errors we want them
         # to bubble up.
         import_module("%s.mli" % app)
+    for event in __instance.keys():
+        __instance[event] = sorted(__instance[event], key=lambda hook: hook.priority)
 
 # Hooks are functions executed after an event is signaled.
 # They are intended to execute additional required actions.
 # Any modification on arguments will be ignored.
-def add_hook(event, hook):
+def add_hook(event, hook, priority=10):
+    hook.priority = priority
     if not event in __instance:
         __instance[event] = []
     __instance[event].append(hook)
@@ -54,9 +57,13 @@ def signal(event, **kwargs):
 # of values used later.
 # Functions must return **kwargs.
 def add_filter(id_, filter_function):
-    # TODO
-    pass
+    add_hook('filter_%s' % id_, filter_function)
 
-def apply_filter(id_, filter_function):
-    # TODO
-    pass
+def apply_filter(id_, **kwargs):
+    real_id = 'filter_%s' % id_
+    if not real_id in __instance:
+        return
+    for filter_ in __instance[real_id]:
+        # TODO check if module's function is active
+        kwargs = filter_(**kwargs)
+    return kwargs

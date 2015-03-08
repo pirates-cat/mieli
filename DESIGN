@@ -47,3 +47,10 @@ At this point, we need a way to use Django's standard User model without customi
 
 In this way, organizations can freely assign usernames with custom policies and it even opens up federation in a easy way.
 
+### Hooks and filters
+
+Mieli must allow proper extension through addition of functionality (events and hooks) and modification of parameters (filters). This is a simple way to loosely couple our modules. No hard dependencies, just events and filters.
+
+Hooks allow to react on specific events signaled by other modules and apps. Hooks should be able to choose if they are sync or async (through task queues). Events are not predefined, just raised from where we want but hooks must be registered at your app's mli.py file (like Django's admin.py).
+
+Filters are like hooks but they can modify arguments. They must return all the arguments. They are useful to add additional flags in CLI tools.
