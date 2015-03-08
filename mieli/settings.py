@@ -55,6 +55,7 @@ INSTALLED_APPS = DEFAULT_APPS + FIRST_PARTY_APPS + THIRD_PARTY_APPS
 MIDDLEWARE_CLASSES = (
     'django_mu.middleware.MultiSiteMiddleware',
     'django.contrib.sites.middleware.CurrentSiteMiddleware',
+    'mieli.middleware.MieliMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -71,6 +72,7 @@ DEFAULT_TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.media",
     "django.core.context_processors.static",
     "django.core.context_processors.debug",
+    "django.core.context_processors.request",
 )
 
 CUSTOM_TEMPLATE_CONTEXT_PROCESSORS = ()
@@ -79,7 +81,9 @@ TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_TEMPLATE_CONTEXT_PROCESSORS + CUSTOM_TEMPL
 
 
 # Static file configuration
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# It must be an external path.
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 STATIC_URL = '/static/'
 
 

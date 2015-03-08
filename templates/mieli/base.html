@@ -1,0 +1,32 @@
+{% load i18n %}
+{% load staticfiles %}
+{% get_current_language as LANGUAGE_CODE %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+	<title>Mieli</title>
+	<link class="ui" href="{% static 'mieli/semantic.min.css' %}" rel="stylesheet">
+	<link href="{% static 'mieli/mieli.css' %}" rel="stylesheet">
+</head>
+<body>
+<nav id="bar" class="ui menu inverted navbar page grid" style="margin-bottom: 0px">
+	<a class="brand item">{{ request.organization.name }}</a>
+	<div class="right menu">
+		<div class="item">
+			<button class="ui green button">Registra't</button>
+		</div>
+	</div>
+</nav>
+<div class="ui grid">
+	<div class="row">
+		<div class="column padding-reset">
+			<div class="ui huge message page grid">
+				<h1 class="ui huge header">Hola</h1>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+<script src="{% static 'mieli/semantic.min.js' %}"></script>
+</body>
+</html>
