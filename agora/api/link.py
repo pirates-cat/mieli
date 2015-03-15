@@ -1,5 +1,6 @@
 from mieli.api import organization as mieli_organization
 from agora.models import AVLink, OrganizationAgora
+from django.db import transaction
 from django.conf import settings
 import copy
 
@@ -19,6 +20,7 @@ def get(**kwargs):
         link = None
     return link
 
+@transaction.atomic
 def create(org_domain, **kwargs):
     org = mieli_organization.get(domain=org_domain)
     if org == None:
@@ -41,6 +43,7 @@ def create(org_domain, **kwargs):
     avlink.save()
     return avlink
 
+@transaction.atomic
 def delete(org_domain, **kwargs):
     org = mieli_organization.get(domain=org_domain)
     if org == None:

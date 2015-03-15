@@ -15,6 +15,9 @@ def get(**kwargs):
 def all(**kwargs):
     return User.objects.all(**kwargs)
 
+def from_organization(org, **kwargs):
+    return User.objects.filter(username__endswith='@%s' % org.domain, **kwargs)
+
 @transaction.atomic
 def create(username, email, send_invitation=False):
     kwargs = locals()

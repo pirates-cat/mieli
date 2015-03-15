@@ -1,0 +1,1 @@
+Confirma el teu compte aquí: {{ request.get_host }}{% url 'registration_activate' activation_key %}

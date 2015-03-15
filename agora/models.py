@@ -18,11 +18,16 @@ class AVLink(models.Model):
             authorization = kwargs.pop('__auth')
         except KeyError:
             authorization = False
+        try:
+            session = kwargs.pop('__session')
+        except KeyError:
+            session = False
         endpoint = '%s/api/v1/%s/' % (self.url, _action)
         headers = { 'Accept': 'application/json, text/javascript', 'Content-Type': 'application/json; charset=utf-8' }
         if authorization:
             headers['Authorization'] = 'ApiKey %s:%s' % (self.user, self.token)
         req = urllib2.Request(endpoint, data=json.dumps(kwargs), headers=headers)
+        f = None
         try:
             f = urllib2.urlopen(req)
             r = f.read()
@@ -31,7 +36,10 @@ class AVLink(models.Model):
                 raise Exception("error %d on '%s': %s" % (f.getcode(), endpoint, r))
         except urllib2.HTTPError as e:
             r = e.fp.read()
-        return json.loads(r)
+        res = json.loads(r)
+        if session and f:
+            res['__session'] = f.headers.get('Set-Cookie')
+        return res
 
     @property
     def url(self):

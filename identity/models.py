@@ -1,7 +1,9 @@
 from mieli import registry
 from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
+import slugify
 
 class Organization(models.Model):
     # Domains should be:
@@ -23,6 +25,13 @@ class Organization(models.Model):
     def name(self):
         return self.site.name
 
+    @property
+    def main_nexus(self):
+        try:
+            return Nexus.objects.get(organization=self, slug=slugify.slugify(settings.MAIN_NEXUS, to_lower=True))
+        except Nexus.DoesNotExist:
+            return None
+
 class Nexus(models.Model):
     organization = models.ForeignKey(Organization)
     name = models.CharField(max_length=128)
@@ -32,3 +41,10 @@ class Nexus(models.Model):
     def join(self, user):
         self.users.add(user)
         registry.signal('user_join', user=user, nexus=self)
+
+# Personal Identification Document
+class PID(models.Model):
+    user = models.ForeignKey(User)
+    organization = models.ForeignKey(Organization)
+    value = models.CharField(max_length=10)
+    document = models.FileField(upload_to='pids/%Y/%m/%d')

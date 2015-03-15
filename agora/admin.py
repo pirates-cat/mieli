@@ -1,3 +1,6 @@
 from django.contrib import admin
+from agora.models import *
 
-# Register your models here.
+admin.site.register(OrganizationAgora)
+admin.site.register(AVLink)
+admin.site.register(NexusAgora)

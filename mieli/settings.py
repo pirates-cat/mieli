@@ -46,6 +46,10 @@ FIRST_PARTY_APPS = (
 
 THIRD_PARTY_APPS = (
     'gunicorn',
+    'registration',
+    'crispy_forms',
+    'crispy_forms_foundation',
+    'django_tables2',
 )
 
 INSTALLED_APPS = DEFAULT_APPS + FIRST_PARTY_APPS + THIRD_PARTY_APPS
@@ -80,6 +84,10 @@ CUSTOM_TEMPLATE_CONTEXT_PROCESSORS = ()
 TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_TEMPLATE_CONTEXT_PROCESSORS + CUSTOM_TEMPLATE_CONTEXT_PROCESSORS
 
 
+# Email backend
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
 # Static file configuration
 # It must be an external path.
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
@@ -107,6 +115,7 @@ DATABASES = {
 #  Optimizes read heavy PG workload, install only if PG
 if 'postgresql_psycopg2' == 'postgresql_psycopg2':
     DATABASES['default']['OPTIONS'] = {'autocommit': True}
+
 
 # Internationalization
 LANGUAGE_CODE = 'en-us'
@@ -155,6 +164,16 @@ LOGGING = {
         },
     }
 }
+
+
+# Django-Registration
+ACCOUNT_ACTIVATION_DAYS = 7
+LOGIN_REDIRECT_URL = 'home'
+
+
+# Crispy Forms
+CRISPY_TEMPLATE_PACK = 'foundation-5'
+
 
 # Mieli
 MAIN_NEXUS = 'Main'

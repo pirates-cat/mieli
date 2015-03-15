@@ -1,12 +1,14 @@
 from mieli.api import organization
+from django.db import transaction
 from django.conf import settings
 from agora.api import link
 
+@transaction.atomic
 def create(user, **kwargs):
     org = organization.get_by_username(user.username)
     if org == None:
         raise Exception("unknown organization for user '%s'" % user.username)
-    lnk = link.get(organization=org)
+    lnk = link.get(organization=org, user='agora')
     if lnk == None:
         raise Exception("no Agora Voting's admin link for organization '%s'" % org.domain)
     kwargs = {}
@@ -18,14 +20,16 @@ def create(user, **kwargs):
     login_kwargs = {}
     login_kwargs['identification'] = kwargs['username']
     login_kwargs['password'] = kwargs['password2']
-    login = lnk.post('user/login', **login_kwargs)
+    login_ = login(lnk, **login_kwargs)
     link_kwargs = {}
     link_kwargs['user'] = kwargs['username']
     link_kwargs['token'] = login['apikey']
-    link_kwargs['welcome_message'] = ''
     link.create(org.domain, **link_kwargs)
 
+def login(lnk, identification, password=settings.AGORA_DEFAULT_KEY):
+    return lnk.post('user/login', identification=identification, password=password, __session=True)
 
+@transaction.atomic
 def delete(user, **kwargs):
     org = organization.get_by_username(user.username)
     if org == None:

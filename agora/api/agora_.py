@@ -43,4 +43,7 @@ def join(user, nexus, **kwargs):
     kwargs['action'] = 'add_membership'
     kwargs['username'] = agora_user.get_agora_username(user)
     kwargs['__auth'] = True
-    n_agora.link.post('agora/%d/action' % n_agora.agora_id, **kwargs)
+    kwargs['welcome_message'] = ''
+    r = n_agora.link.post('agora/%d/action' % n_agora.agora_id, **kwargs)
+    if 'error_message' in r:
+        raise Exception(r['error_message'])

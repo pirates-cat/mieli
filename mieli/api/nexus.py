@@ -1,3 +1,4 @@
+from mieli.api import organization
 from identity.models import Nexus
 from django.db import transaction
 from django.conf import settings
@@ -34,7 +35,8 @@ def on_organization_creation(**kwargs):
     create(settings.MAIN_NEXUS, kwargs['organization'])
 
 def auto_join(user, **kwargs):
-    nexus = get(slug=slugify.slugify(settings.MAIN_NEXUS, to_lower=True))
+    organization_ = organization.get_by_username(user.username)
+    nexus = organization.main_nexus()
     if nexus == None:
         raise Exception("main nexus '%s' doesn't exist" % settings.MAIN_NEXUS)
     nexus.join(user)
