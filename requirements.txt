@@ -1,7 +1,12 @@
+Django==1.7.5
+Pygments==2.0.2
+Unidecode==0.04.17
+argparse==1.2.1
 awesome-slugify==1.6.2
+cookies==2.2.1
 coverage==3.7.1
 crispy-forms-foundation==0.4.1
-Django==1.7.5
+distribute==0.6.24
 django-coverage==1.2.4
 django-crispy-forms==1.4.0
 django-mu==0.0.2
@@ -14,9 +19,8 @@ httpie==0.8.0
 ipdb==0.8
 ipython==2.0.0
 psycopg2==2.5.4
-Pygments==2.0.2
 regex==2014.12.24
 requests==2.5.1
 six==1.9.0
 tldextract==1.5.1
-Unidecode==0.4.17
+wsgiref==0.1.2

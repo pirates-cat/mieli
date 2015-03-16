@@ -179,6 +179,7 @@ CRISPY_TEMPLATE_PACK = 'foundation-5'
 MAIN_NEXUS = 'Main'
 AGORA_ADMIN_USER = 'agora'
 AGORA_DEFAULT_KEY = 'canihazchangeplz?'
+AGORA_BACKEND_COOKIE = 'agora_backend'
 
 try:
     from mieli.custom_settings import *

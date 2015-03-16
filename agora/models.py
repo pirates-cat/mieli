@@ -13,6 +13,14 @@ class AVLink(models.Model):
     user = models.CharField(max_length=32, blank=False)
     token = models.CharField(max_length=64, blank=False)
 
+    def head(self, _action, **kwargs):
+        endpoint = '%s/%s' % (self.url, _action)
+        req = urllib2.Request(endpoint)
+        req.get_method = lambda : 'HEAD'
+        f = urllib2.urlopen(req)
+        f.close()
+        return f.getcode()
+
     def post(self, _action, **kwargs):
         try:
             authorization = kwargs.pop('__auth')
