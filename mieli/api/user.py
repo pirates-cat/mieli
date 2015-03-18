@@ -33,6 +33,7 @@ def create(username, email, send_invitation=False):
     user.full_clean()
     user.save()
     registry.signal('user_create', user=user)
+    registry.signal('user_approval', user=user)
     if send_invitation:
         # TODO send notification
         pass

@@ -2,7 +2,7 @@ from mieli import registry
 from agora.api import agora_, user, link
 from agora import cli
 
-registry.add_hook('user_approved', user.create)
+registry.add_hook('user_approval', user.create)
 registry.add_hook('user_delete', user.delete)
 registry.add_hook('organization_init', link.on_organization_creation)
 registry.add_hook('nexus_create', agora_.create)

@@ -36,7 +36,7 @@ def on_organization_creation(**kwargs):
 
 def auto_join(user, **kwargs):
     organization_ = organization.get_by_username(user.username)
-    nexus = organization.main_nexus()
+    nexus = organization_.main_nexus
     if nexus == None:
         raise Exception("main nexus '%s' doesn't exist" % settings.MAIN_NEXUS)
     nexus.join(user)

@@ -97,6 +97,7 @@ STATIC_URL = '/static/'
 
 # Media files configuration
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# Add a random suffix '-suffix' to avoid leaks
 MEDIA_URL = '/media/'
 
 
@@ -120,8 +121,8 @@ if 'postgresql_psycopg2' == 'postgresql_psycopg2':
 # Internationalization
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
-USE_I18N = False
-USE_L10N = False
+USE_I18N = True
+USE_L10N = True
 USE_TZ = True
 
 LOGGING = {

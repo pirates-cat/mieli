@@ -27,7 +27,7 @@ def vote(request, path):
     n_agora = agora_.get_by_nexus(nexus)
     booth = '%s/%s/election/%s/vote' % (settings.AGORA_ADMIN_USER, n_agora.agora, path)
     try:
-        n_agora.link.head(booth, __session=True)
+        n_agora.link.head(booth)
     except:
         raise Http404('Vote does not exist.')
     r = agora_user.login(n_agora.link, agora_user.get_agora_username(request.user))
@@ -45,5 +45,5 @@ def vote(request, path):
     except KeyError:
         return HttpResponseServerError('Unexpected error getting backend cookie.')
     response = redirect('%s/%s' % (n_agora.link.url, booth))
-    reponse.set_cookie(settings.AGORA_BACKEND_COOKIE, value=abc.value, max_age=abc.max_age, expires=abc.expires, path=abc.path, domain=abc.domain, secure=abc.secure, httponly=abc.httponly)
+    response.set_cookie(settings.AGORA_BACKEND_COOKIE, value=abc.value, max_age=abc.max_age, expires=abc.expires, path=abc.path, domain=abc.domain, secure=abc.secure, httponly=abc.httponly)
     return response
