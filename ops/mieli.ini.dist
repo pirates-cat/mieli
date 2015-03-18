@@ -1,0 +1,17 @@
+[uwsgi]
+chdir=/dir/where/mieli/is/
+home=/home/unprivileged/.virtualenvs/mieli
+module=mieli.wsgi:application
+master=True
+plugins=python
+uid=nginx_or_apache_user
+workers=4
+threads=1
+gid=www-data
+pidfile=/home/unprivileged/run/mieli.pid
+vacuum=True
+chmod-socket=666
+max-requests=5000
+harakiri=2000
+socket=/home/unprivileged/run/mieli.sock
+backtrace-depth=10
