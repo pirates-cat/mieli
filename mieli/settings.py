@@ -50,6 +50,8 @@ THIRD_PARTY_APPS = (
     'crispy_forms',
     'crispy_forms_foundation',
     'django_tables2',
+    'django.contrib.flatpages',
+    'cookielaw',
 )
 
 INSTALLED_APPS = DEFAULT_APPS + FIRST_PARTY_APPS + THIRD_PARTY_APPS
@@ -66,6 +68,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 )
 
 

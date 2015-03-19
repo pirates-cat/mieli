@@ -4,8 +4,8 @@
 
 - Add first_name and last_name fields on registration form
 - Flatpages
-- Header template block
-- Front page template block
+- [*] Header template block
+- [*] Front page template block
 - Complete pending templates
 - Set up 403, 404 and 500 templates
 - Complete our first swarm design
