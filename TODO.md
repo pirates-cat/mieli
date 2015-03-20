@@ -3,7 +3,6 @@
 ## High priority
 
 - Add first_name and last_name fields on registration form
-- Flatpages
 - [*] Header template block
 - [*] Front page template block
 - Complete pending templates
