@@ -9,27 +9,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ request.organization.name }} - Sistema de Participació</title>
     <link rel="stylesheet" href="{% static 'mieli/css/foundation.css' %}" />
-    <link rel="stylesheet" href="{% static 'cookielaw/css/cookielaw.cs' %}" />
+    <link rel="stylesheet" href="{% static 'mieli/css/mieli.css' %}" />
     {% with ''|add:request.META.HTTP_HOST|add:'/css/style.css' as site_css %}<link rel="stylesheet" href="{% static site_css %}" />{% endwith %}
+    <link rel="stylesheet" href="{% static 'cookielaw/css/cookielaw.css' %}" />
     {% block css %}{% endblock %}
     <script src="{% static 'mieli/js/vendor/modernizr.js' %}"></script>
   </head>
   <body>
-    <div class="row">
-      <header class="large-12 columns">
-        <h1 class="hide-text show-image">{{ request.organization.name }}</h1>
-      </header>
-    </div>
-    <div class="row">
-      <div class="large-12 columns">
+    <header class="row full-width">
+      <div class="small-12 columns">
+        <nav role="navigation" class="row" data-equalizer>
+          <div class="small-9 columns" data-equalizer-watch>
+            <a class="logo" href="#"><h1>{{ request.organization.name }}</h1></a>
+          </div>
+          <div class="small-3 columns">
+            <ul class="menu" data-equalizer-watch>
+              <li><a data-equalizer-watch href="#">Registra't</a></li>
+              <li><a data-equalizer-watch href="#">Identifica't</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <div id="content" class="row">
+      <div class="small-12 columns">
       {% block content %}{% endblock %}
       </div>
     </div>
+    <footer class="row full-width">
+      <div class="row">
+        <div class="small-8 columns">
+          <h4>{{ request.organization.name }}</h4>
+        </div>
+        <div class="small-4 columns">
+          <h4>Programari</h4>
+          <ul class="links">
+            <li><a href="https://github.com/pirata-cat/mieli">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
     <script src="{% static 'mieli/js/vendor/jquery.js' %}"></script>
     <script src="{% static 'mieli/js/foundation.min.js' %}"></script>
+    <script src="{% static 'mieli/js/foundation/foundation.equalizer.js' %}"></script>
     <script src="{% static 'cookielaw/js/cookielaw.js' %}"></script>
     <script>
-      $(document).foundation();
+      $(document).foundation('equalizer', 'reflow');
     </script>
   </body>
 </html>
