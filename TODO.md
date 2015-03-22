@@ -3,7 +3,6 @@
 ## High priority
 
 - Complete pending templates
-- Set up 403, 404 and 500 templates
 - '?next' param support on login view
 - [*] Dynamic email settings (based on sites framework)
 - [*] Send 'set password and login' link on user creation from cli

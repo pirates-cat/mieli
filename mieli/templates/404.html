@@ -1,4 +1,5 @@
 {% extends 'mieli/base.html' %}
 {% block content %}
 <h2>Aquesta pàgina no existeix</h2>
+<p>Pots tornar a la <a href="/">portada</a>{% if request.organization.contact %} o contactar-nos a {{request.organization.contact}}{% endif %} si creus que hi ha un error.</p>
 {% endblock %}

@@ -20,6 +20,7 @@ class Organization(models.Model):
     meta = models.BooleanField(default=False)
     # UID field: User's field used as unique identifier (30 chars due max. Oracle column name's length)
     uid_field = models.CharField(max_length=30, default='email')
+    contact = models.EmailField(blank=True)
 
     @property
     def domain(self):

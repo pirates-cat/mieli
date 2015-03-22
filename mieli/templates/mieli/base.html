@@ -6,7 +6,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ request.organization.name }} - Sistema de Participació</title>
+    <title>{{ request.organization.name }} - {% block title %}Sistema de participació{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'mieli/css/foundation.css' %}" />
     <link rel="stylesheet" href="{% static 'mieli/css/mieli.css' %}" />
     {% with ''|add:request.META.HTTP_HOST|add:'/css/style.css' as site_css %}<link rel="stylesheet" href="{% static site_css %}" />{% endwith %}
@@ -57,6 +57,7 @@
       $(document).foundation('equalizer', 'reflow');
       $(document).ready(function() {
           $.cookiesDirective({
+              duration: 5,
               explicitConsent: false,
               message: 'Aquest lloc empra cookies per al seu funcionament. Si continues navegant estaràs acceptant-les. ',
               impliedDisclosureText: 'Per a més informació consulta la nostra',

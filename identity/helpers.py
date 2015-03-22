@@ -10,7 +10,8 @@ def get_current_organization():
     site = Site.objects.get(pk=sid)
     return site.organization_set.get()
 
-def set_extra_fields(fields, **kwargs):
+def set_extra_fields(form, **kwargs):
+    fields = form.fields
     organization = get_current_organization()
     fields['first_name'] = forms.CharField(max_length=30)
     fields['last_name'] = forms.CharField(max_length=30)

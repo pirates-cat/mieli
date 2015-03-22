@@ -8,7 +8,7 @@ from mieli import registry
 class RegistrationForm(BaseRegistrationForm):
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)
-        registry.apply_filter('registration_form', fields=self.fields)
+        registry.apply_filter('registration_form', form=self)
 
     def clean_username(self):
         self.cleaned_data['username'] = '%s@%s' % (self.cleaned_data['username'], helpers.get_current_organization().suffix)
