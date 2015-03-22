@@ -16,7 +16,7 @@ def all(**kwargs):
     return User.objects.all(**kwargs)
 
 def from_organization(org, **kwargs):
-    return User.objects.filter(username__endswith='@%s' % org.domain, **kwargs)
+    return User.objects.filter(username__endswith='@%s' % org.suffix, **kwargs)
 
 @transaction.atomic
 def create(username, email, send_invitation=False):
@@ -24,7 +24,7 @@ def create(username, email, send_invitation=False):
     if get(username=username):
         raise Exception("user '%s' already exists" % username)
     org = organization.get_by_username(username)
-    query = { 'username__endswith': '@%s' % org.domain, org.uid_field: kwargs[org.uid_field] }
+    query = { 'username__endswith': '@%s' % org.suffix, org.uid_field: kwargs[org.uid_field] }
     if get(**query):
         raise Exception("unique identifier field '%s' with value '%s' already exists" % (org.uid_field, kwargs[org.uid_field]))
     kwargs['password'] = ''.join(random.choice(string.printable) for x in range(12))
@@ -53,4 +53,4 @@ def delete_all(**kwargs):
 
 def on_organization_deletion(**kwargs):
     org = kwargs['organization']
-    delete_all(username__endswith='@%s' % org.domain)
+    delete_all(username__endswith='@%s' % org.suffix)

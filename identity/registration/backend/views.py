@@ -38,6 +38,9 @@ class RegistrationView(BaseRegistrationView):
             pid_data['value'] = cleaned_data.pop('pid_number')
             pid_data['document'] = cleaned_data.pop('pid_upload')
         new_user = super(RegistrationView, self).register(request, **cleaned_data)
+        new_user.first_name = cleaned_data['first_name']
+        new_user.last_name = cleaned_data['last_name']
+        new_user.save()
         registry.signal('user_create', user=new_user)
         if len(pid_data) > 0:
             self.handle_pid(new_user, request.organization, **pid_data)

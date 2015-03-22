@@ -4,6 +4,8 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 import slugify
+import time
+import os
 
 class Organization(models.Model):
     # Domains should be:
@@ -11,6 +13,8 @@ class Organization(models.Model):
     # - 3: max number of DNS labels, as "subdomain.domain.tld"
     # Domain aliases must be handled on HTTP server layer. Nginx recommended.
     site = models.ForeignKey(Site)
+    # Three letter alias (only useful when user@domain is bigger than 30)
+    alias = models.CharField(max_length=3, blank=True)
     theme = models.CharField(max_length=32, default='default')
     # Is a meta-organization?
     meta = models.BooleanField(default=False)
@@ -20,6 +24,12 @@ class Organization(models.Model):
     @property
     def domain(self):
         return self.site.domain
+
+    @property
+    def suffix(self):
+        if self.alias:
+            return self.alias
+        return self.domain
 
     @property
     def name(self):
@@ -42,9 +52,12 @@ class Nexus(models.Model):
         self.users.add(user)
         registry.signal('user_join', user=user, nexus=self)
 
+def get_upload_path(instance, filename):
+    return os.path.join('pids', instance.organization.domain, time.strftime('%Y/%m/%d'), slugify.slugify(filename))
+
 # Personal Identification Document
 class PID(models.Model):
     user = models.ForeignKey(User)
     organization = models.ForeignKey(Organization)
     value = models.CharField(max_length=10)
-    document = models.FileField(upload_to='pids/%Y/%m/%d')
+    document = models.FileField(upload_to=get_upload_path)

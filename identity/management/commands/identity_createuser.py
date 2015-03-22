@@ -27,5 +27,5 @@ class Command(MieliCommand):
         organization_ = organization.get(domain=domain)
         if organization_ == None:
             raise CommandError('unknown organization')
-        options['username'] = "%s@%s" % (options['username'], organization_.domain)
+        options['username'] = "%s@%s" % (options['username'], organization_.suffix)
         user.create(**options)

@@ -11,7 +11,7 @@ class RegistrationForm(BaseRegistrationForm):
         registry.apply_filter('registration_form', fields=self.fields)
 
     def clean_username(self):
-        self.cleaned_data['username'] = '%s@%s' % (self.cleaned_data['username'], helpers.get_current_organization().domain)
+        self.cleaned_data['username'] = '%s@%s' % (self.cleaned_data['username'], helpers.get_current_organization().suffix)
         return super(RegistrationForm, self).clean_username()
 
     def clean(self):
@@ -26,5 +26,5 @@ class LoginForm(AuthenticationForm):
     helper.add_input(Submit('submit', 'Submit'))
 
     def clean(self):
-        self.cleaned_data['username'] = '%s@%s' % (self.cleaned_data['username'], helpers.get_current_organization().domain)
+        self.cleaned_data['username'] = '%s@%s' % (self.cleaned_data['username'], helpers.get_current_organization().suffix)
         return super(LoginForm, self).clean()

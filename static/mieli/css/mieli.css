@@ -1,3 +1,8 @@
+body, footer {
+    background: #572B85;
+    color: #FFF;
+}
+
 .row.full-width {
     max-width: 100% !important;
 }
@@ -11,9 +16,11 @@
 }
 
 header {
-    -webkit-box-shadow: 0px 3px 5px 0px rgba(150, 150, 150, 0.75);
-    -moz-box-shadow:    0px 3px 5px 0px rgba(150, 150, 150, 0.75);
-    box-shadow:         0px 3px 5px 0px rgba(150, 150, 150, 0.75);
+    -webkit-box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow:    0px 3px 5px 0px rgba(0, 0, 0, 0.25);
+    box-shadow:         0px 3px 5px 0px rgba(0, 0, 0, 0.25);
+    background: #FFF;
+    position: relative;
 }
 
 .menu {
@@ -40,6 +47,7 @@ header {
 
 #content {
     padding-top: 0.5rem;
+    background: #FFF;
 }
 
 .menu a:hover {
@@ -58,9 +66,7 @@ header {
 }
 
 footer {
-    background-color: #572B85;
     padding: 2rem 4rem;
-    color: #FFF;
 }
 
 footer h4 {

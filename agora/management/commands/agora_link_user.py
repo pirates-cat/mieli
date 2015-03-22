@@ -27,11 +27,11 @@ class Command(MieliCommand):
             help='Only join nexus agora')
 
     def invoke(self, *args, **options):
-        user_ = mieli_user.get(username='%s@%s' % (options['username'], options['domain']))
+        organization_ = organization.get(domain=options['domain'])
+        user_ = mieli_user.get(username='%s@%s' % (options['username'], organization_.suffix))
         if user_ == None:
             raise CommandError('unknown user')
         if options['only_join']:
-           organization_ = organization.get_by_username(user_.username)
            nexus_ = nexus.get(name=settings.MAIN_NEXUS, organization=organization_)
            agora_.join(user_, nexus_)
         else:

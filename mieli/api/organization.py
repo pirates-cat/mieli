@@ -27,7 +27,11 @@ def get_by_username(username):
         raise Exception("invalid username '%s', expected username@organization" % username)
     domain = username.split('@')[1]
     query = { 'domain': domain }
-    return get(**query)
+    result = get(**query)
+    if result == None:
+        query = { 'alias': domain }
+        result = get(**query)
+    return result
 
 @transaction.atomic
 def create(domain, name, **kwargs):
@@ -36,7 +40,7 @@ def create(domain, name, **kwargs):
     site = Site(domain=domain, name=name)
     site.full_clean()
     site.save()
-    organization = Organization(site=site)
+    organization = Organization(site=site, **kwargs)
     organization.full_clean()
     organization.save()
     registry.signal('organization_create', organization=organization, **kwargs)

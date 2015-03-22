@@ -20,20 +20,22 @@
       <div class="small-12 columns">
         <nav role="navigation" class="row" data-equalizer>
           <div class="small-9 columns" data-equalizer-watch>
-            <a class="logo" href="#"><h1>{{ request.organization.name }}</h1></a>
+            <a class="logo" href="/"><h1>{{ request.organization.name }}</h1></a>
           </div>
           <div class="small-3 columns">
             <ul class="menu" data-equalizer-watch>
-              <li><a data-equalizer-watch href="#">Registra't</a></li>
-              <li><a data-equalizer-watch href="#">Identifica't</a></li>
+              <li><a data-equalizer-watch href="{% url 'registration_register' %}">Registra't</a></li>
+              <li><a data-equalizer-watch href="{% url 'auth_login' %}">Identifica't</a></li>
             </ul>
           </div>
         </nav>
       </div>
     </header>
-    <div id="content" class="row">
+    <div id="content" class="row full-width">
       <div class="small-12 columns">
-      {% block content %}{% endblock %}
+        <div class="row">
+        {% block content %}{% endblock %}
+        </div>
       </div>
     </div>
     <footer class="row full-width">
