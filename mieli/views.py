@@ -9,9 +9,6 @@ from django.conf import settings
 from mieli.api import user
 import cookies
 
-def home(request):
-    return render(request, 'mieli/index.html')
-
 @user_passes_test(lambda u:u.is_staff, login_url='auth_login')
 def dashboard(request):
     users = user.from_organization(request.organization, is_active=True, nexus=None)
@@ -45,5 +42,5 @@ def vote(request, path):
     except KeyError:
         return HttpResponseServerError('Unexpected error getting backend cookie.')
     response = redirect('%s/%s' % (n_agora.link.url, booth))
-    response.set_cookie(settings.AGORA_BACKEND_COOKIE, value=abc.value, max_age=abc.max_age, expires=abc.expires, path=abc.path, domain=abc.domain, secure=abc.secure, httponly=abc.httponly)
+    response.set_cookie(settings.AGORA_BACKEND_COOKIE, value=abc.value, max_age=abc.max_age, expires=abc.expires, path=abc.path, domain=request.site.domain, secure=abc.secure, httponly=abc.httponly)
     return response

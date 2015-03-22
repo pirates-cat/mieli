@@ -2,7 +2,7 @@ from mieli import registry
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.contrib.sites.models import Site
+from django.contrib.sites.models import Site, _simple_domain_name_validator
 import slugify
 import time
 import os
@@ -21,6 +21,13 @@ class Organization(models.Model):
     # UID field: User's field used as unique identifier (30 chars due max. Oracle column name's length)
     uid_field = models.CharField(max_length=30, default='email')
     contact = models.EmailField(blank=True)
+    email_host = models.CharField(max_length=100, validators=[_simple_domain_name_validator], blank=True)
+    email_port = models.IntegerField(default=587)
+    email_host_user = models.CharField(max_length=30, blank=True)
+    email_host_password = models.CharField(max_length=100, blank=True)
+    email_use_tls = models.BooleanField(default=True)
+    email_use_ssl = models.BooleanField(default=False)
+    web = models.URLField(blank=True)
 
     @property
     def domain(self):
@@ -53,8 +60,9 @@ class Nexus(models.Model):
         self.users.add(user)
         registry.signal('user_join', user=user, nexus=self)
 
-def get_upload_path(instance, filename):
-    return os.path.join('pids', instance.organization.domain, time.strftime('%Y/%m/%d'), slugify.slugify(filename))
+def get_upload_path(instance, file_):
+    file_name, file_ext = os.path.splitext(file_)
+    return os.path.join('pids', instance.organization.domain, time.strftime('%Y/%m/%d'), '%s%s' % (slugify.slugify(file_name), file_ext))
 
 # Personal Identification Document
 class PID(models.Model):

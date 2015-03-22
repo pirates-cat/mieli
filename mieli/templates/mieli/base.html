@@ -22,8 +22,14 @@
           </div>
           <div class="small-3 columns">
             <ul class="menu" data-equalizer-watch>
+              {% if request.user.is_authenticated %}
+              <li><a data-equalizer-watch href="#">{{request.user.username}}</a></li>
+              {% if request.user.is_staff %}<li><a data-equalizer-watch href="{% url 'dashboard' %}">Gestió</a></li>{% endif %}
+              <li><a data-equalizer-watch href="{% url 'auth_logout' %}">Sortir</a></li>
+              {% else %}
               <li><a data-equalizer-watch href="{% url 'registration_register' %}">Registra't</a></li>
               <li><a data-equalizer-watch href="{% url 'auth_login' %}">Identifica't</a></li>
+              {% endif %}
             </ul>
           </div>
         </nav>
@@ -38,13 +44,26 @@
     </div>
     <footer class="row full-width">
       <div class="row">
-        <div class="small-8 columns">
+        <div class="small-4 columns">
           <h4>{{ request.organization.name }}</h4>
+          <ul class="links">
+            <li><a href="{% url 'registration_register' %}">Registre</a></li>
+            <li><a href="{% url 'auth_login' %}">Entrada</a></li>
+            <li><a href="{% url 'django.contrib.flatpages.views.flatpage' url='contact/' %}">Contacte</a></li>
+            {% if request.organization.web %}<li><a href="{{ request.organization.web }}">Web</a>{% endif %}
+          </ul>
+        </div>
+        <div class="small-4 columns">
+          <h4>Legal</h4>
+          <ul class="links">
+            <li><a href="{% url 'django.contrib.flatpages.views.flatpage' url='privacy/' %}">Política de privacitat</a></li>
+          </ul>
         </div>
         <div class="small-4 columns">
           <h4>Programari</h4>
           <ul class="links">
             <li><a href="https://github.com/pirata-cat/mieli">GitHub</a></li>
+            <li><a href="http://pirata.cat/">Pirates de Catalunya</a></li>
           </ul>
         </div>
       </div>

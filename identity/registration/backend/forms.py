@@ -23,7 +23,7 @@ class LoginForm(AuthenticationForm):
     helper.form_id = 'login'
     helper.form_method = 'post'
     helper.form_action = 'auth_login'
-    helper.add_input(Submit('submit', 'Submit'))
+    helper.add_input(Submit('submit', 'Enviar'))
 
     def clean(self):
         self.cleaned_data['username'] = '%s@%s' % (self.cleaned_data['username'], helpers.get_current_organization().suffix)

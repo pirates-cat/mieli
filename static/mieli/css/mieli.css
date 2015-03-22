@@ -23,6 +23,15 @@ header {
     position: relative;
 }
 
+a, a:hover {
+    color: #572B85;
+}
+
+button, .button {
+    background: #572B85;
+    border-color: #683C96;
+}
+
 .menu {
     margin: 0;
     padding: 0;
@@ -98,4 +107,9 @@ footer .links {
 
 footer .links li {
   margin-top: .5em;
+}
+
+footer .links a:hover {
+    color: #FFF;
+    text-decoration: underline;
 }

@@ -1,1 +1,1 @@
-Confirma el teu compte aquí: {{ request.get_host }}{% url 'registration_activate' activation_key %}
+Confirma el teu compte aquí: https://{{ request.get_host }}{% url 'registration_activate' activation_key %}

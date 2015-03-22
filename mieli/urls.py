@@ -8,4 +8,5 @@ urlpatterns = patterns('',
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}, name='media'),
     url(r'^dashboard/$', 'mieli.views.dashboard', name='dashboard'),
     url(r'^vote/(?P<path>[a-z0-9_-]+)$', 'mieli.views.vote', name='vote'),
+    url(r'^(?P<url>.*)$', 'django.contrib.flatpages.views.flatpage'),
 )

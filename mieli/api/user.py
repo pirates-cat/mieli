@@ -1,4 +1,6 @@
+# -*- coding: utf-8 -*-
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
 from django.db import transaction
 from mieli.api import organization
 from mieli import registry
@@ -54,3 +56,8 @@ def delete_all(**kwargs):
 def on_organization_deletion(**kwargs):
     org = kwargs['organization']
     delete_all(username__endswith='@%s' % org.suffix)
+
+def send_approve_email(**kwargs):
+    user = kwargs['user']
+    org = organization.get_by_username(user.username)
+    send_mail(u'%s - Aprovació' % org.name, u'Has estat aprovat a %s. Ara pots anar a https://%s/ i participar-hi!' % (org.name, org.domain), org.contact, [ user.email ], fail_silently=False)
