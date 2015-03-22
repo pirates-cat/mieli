@@ -1,4 +1,5 @@
 {% extends 'mieli/base.html' %}
+{% load mieli_tags %}
 {% block content %}
-{{ flatpage.content }}
+{% render_flatpage flatpage %}
 {% endblock %}

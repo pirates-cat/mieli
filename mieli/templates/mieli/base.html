@@ -58,9 +58,10 @@
       $(document).ready(function() {
           $.cookiesDirective({
               explicitConsent: false,
-              message: 'Aquest lloc empra cookies per al seu funcionament. ',
+              message: 'Aquest lloc empra cookies per al seu funcionament. Si continues navegant estaràs acceptant-les. ',
               impliedDisclosureText: 'Per a més informació consulta la nostra',
               privacyPolicyLinkText: 'política de privacitat',
+              impliedSubmitText: 'No mostrar aquest missatge de nou',
               privacyPolicyUri: 'privacitat'
           });
       });

@@ -2,14 +2,13 @@
 
 ## High priority
 
-- [*] Front page template block
 - Complete pending templates
 - Set up 403, 404 and 500 templates
 - '?next' param support on login view
-- [*] Dynamic cookie domain (based on request host)
 - [*] Dynamic email settings (based on sites framework)
 - [*] Send 'set password and login' link on user creation from cli
 - [*] i18n
+- Vote publisher
 
 ## Normal priority
 
