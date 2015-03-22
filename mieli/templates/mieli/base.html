@@ -52,8 +52,18 @@
     <script src="{% static 'mieli/js/vendor/jquery.js' %}"></script>
     <script src="{% static 'mieli/js/foundation.min.js' %}"></script>
     <script src="{% static 'mieli/js/foundation/foundation.equalizer.js' %}"></script>
+    <script src="{% static 'mieli/js/jquery.cookiesdirective/jquery.cookiesdirective.js' %}"></script>
     <script>
       $(document).foundation('equalizer', 'reflow');
+      $(document).ready(function() {
+          $.cookiesDirective({
+              explicitConsent: false,
+              message: 'Aquest lloc empra cookies per al seu funcionament. ',
+              impliedDisclosureText: 'Per a més informació consulta la nostra',
+              privacyPolicyLinkText: 'política de privacitat',
+              privacyPolicyUri: 'privacitat'
+          });
+      });
     </script>
   </body>
 </html>
