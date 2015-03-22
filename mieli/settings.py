@@ -51,7 +51,6 @@ THIRD_PARTY_APPS = (
     'crispy_forms_foundation',
     'django_tables2',
     'django.contrib.flatpages',
-    'cookielaw',
 )
 
 INSTALLED_APPS = DEFAULT_APPS + FIRST_PARTY_APPS + THIRD_PARTY_APPS
