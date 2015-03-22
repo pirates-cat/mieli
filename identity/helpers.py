@@ -14,8 +14,8 @@ def get_current_organization():
 def set_extra_fields(form, **kwargs):
     fields = form.fields
     organization = get_current_organization()
-    fields['first_name'] = forms.CharField(max_length=30)
-    fields['last_name'] = forms.CharField(max_length=30)
+    fields['first_name'] = forms.CharField(label=_('Nom'), max_length=30)
+    fields['last_name'] = forms.CharField(label=_('Cognoms'), max_length=30)
     if organization.uid_field == 'pid':
         fields['pid_number'] = forms.RegexField(regex='^[A-Z]?[0-9]{7,8}[A-Z]$', max_length=10, label=_('DNI'), error_messages={'invalid': _(u'Només pot contenir lletres i números.')})
         fields['pid_upload'] = forms.FileField(label=_(u'Còpia del DNI (ambdues cares)'))
