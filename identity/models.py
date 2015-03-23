@@ -50,6 +50,9 @@ class Organization(models.Model):
         except Nexus.DoesNotExist:
             return None
 
+    def __unicode__(self):
+       return self.name
+
 class Nexus(models.Model):
     organization = models.ForeignKey(Organization)
     name = models.CharField(max_length=128)
@@ -59,6 +62,10 @@ class Nexus(models.Model):
     def join(self, user):
         self.users.add(user)
         registry.signal('user_join', user=user, nexus=self)
+
+    def __unicode__(self):
+       return u'%s - %s' % (self.organization.domain, self.slug)
+
 
 def get_upload_path(instance, file_):
     file_name, file_ext = os.path.splitext(file_)

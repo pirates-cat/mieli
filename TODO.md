@@ -3,7 +3,6 @@
 ## High priority
 
 - '?next' param support on login view
-- Vote publisher
 
 ## Normal priority
 

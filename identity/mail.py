@@ -17,11 +17,11 @@ class EmailBackend(BaseEmailBackend):
         kwargs['use_tls'] = use_tls or organization_.email_use_tls
         if ssl_keyfile or ssl_certfile:
             raise ValueError('SSL keyfile and certificate not supported.')
-        settings.DEFAULT_FROM_EMAIL = 
+        settings.DEFAULT_FROM_EMAIL = organization_.contact
         super(EmailBackend, self).__init__(**kwargs)
 
     def _send(self, email_message):
-        #if email_message.from_email == 'webmaster@localhost':
-        #    organization_ = helpers.get_current_organization()
-        #    email_message.from_email = organization_.contact
+        if email_message.from_email == 'webmaster@localhost':
+            organization_ = helpers.get_current_organization()
+            email_message.from_email = organization_.contact
         return super(EmailBackend, self)._send(email_message)

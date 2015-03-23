@@ -113,3 +113,11 @@ footer .links a:hover {
     color: #FFF;
     text-decoration: underline;
 }
+
+.vote a {
+    width: 100%;
+}
+
+.option {
+    padding-bottom: 0.5em;
+}

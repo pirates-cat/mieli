@@ -171,7 +171,7 @@ LOGGING = {
 
 # Django-Registration
 ACCOUNT_ACTIVATION_DAYS = 7
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = '/'
 
 
 # Crispy Forms

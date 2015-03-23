@@ -18,6 +18,9 @@ def dashboard(request):
         'users': users_table,
     })
 
+def featured(request):
+    return render(request, 'mieli/featured_election.html')
+
 @login_required(login_url='auth_login')
 def vote(request, path):
     nexus = request.organization.main_nexus
@@ -42,5 +45,5 @@ def vote(request, path):
     except KeyError:
         return HttpResponseServerError('Unexpected error getting backend cookie.')
     response = redirect('%s/%s' % (n_agora.link.url, booth))
-    response.set_cookie(settings.AGORA_BACKEND_COOKIE, value=abc.value, max_age=abc.max_age, expires=abc.expires, path=abc.path, domain=request.site.domain, secure=abc.secure, httponly=abc.httponly)
+    response.set_cookie(settings.AGORA_BACKEND_COOKIE, value=abc.value, max_age=abc.max_age, expires=abc.expires, path=abc.path, domain=abc.domain, secure=abc.secure, httponly=abc.httponly)
     return response
