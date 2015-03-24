@@ -27,7 +27,7 @@
               {% if request.user.is_staff %}<li><a data-equalizer-watch href="{% url 'dashboard' %}">Gestió</a></li>{% endif %}
               <li><a data-equalizer-watch href="{% url 'auth_logout' %}">Sortir</a></li>
               {% else %}
-              <li><a data-equalizer-watch href="{% url 'registration_register' %}">Registra't</a></li>
+              {% if request.organization.registration_open %}<li><a data-equalizer-watch href="{% url 'registration_register' %}">Registra't</a></li>{% endif %}
               <li><a data-equalizer-watch href="{% url 'auth_login' %}">Identifica't</a></li>
               {% endif %}
             </ul>

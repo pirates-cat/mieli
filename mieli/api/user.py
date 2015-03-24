@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.db import transaction
 from mieli.api import organization
+from identity.models import PID
 from mieli import registry
 import random
 import string
@@ -21,7 +22,7 @@ def from_organization(org, **kwargs):
     return User.objects.filter(username__endswith='@%s' % org.suffix, **kwargs)
 
 @transaction.atomic
-def create(username, email, send_invitation=False):
+def create(username, email, send_invitation=True, **qwargs):
     kwargs = locals()
     if get(username=username):
         raise Exception("user '%s' already exists" % username)
@@ -29,16 +30,19 @@ def create(username, email, send_invitation=False):
     query = { 'username__endswith': '@%s' % org.suffix, org.uid_field: kwargs[org.uid_field] }
     if get(**query):
         raise Exception("unique identifier field '%s' with value '%s' already exists" % (org.uid_field, kwargs[org.uid_field]))
-    kwargs['password'] = ''.join(random.choice(string.printable) for x in range(12))
+    raw_password = ''.join(random.choice(string.printable) for x in range(12))
     send_invitation = kwargs.pop('send_invitation')
     user = User(**kwargs)
+    user.set_password(raw_password)
     user.full_clean()
     user.save()
+    if 'pid' in qwargs:
+        value = qwargs.pop('pid')
+        pid = PID(user=user, organization=org, value=value)
+        pid.full_clean()
+        pid.save()
     registry.signal('user_create', user=user)
-    registry.signal('user_approval', user=user)
-    if send_invitation:
-        # TODO send notification
-        pass
+    registry.signal('user_approval', user=user, send_invitation=send_invitation, raw_password=raw_password)
 
 @transaction.atomic
 def delete(**kwargs):
@@ -59,5 +63,23 @@ def on_organization_deletion(**kwargs):
 
 def send_approve_email(**kwargs):
     user = kwargs['user']
+    send_invitation = False
+    if 'send_invitation' in kwargs:
+        send_invitation = kwargs['send_invitation']
+    if not send_invitation:
+        return
+    raw_password = 'la que has indicat al registre'
+    if 'raw_password' in kwargs:
+        raw_password = kwargs['raw_password']
     org = organization.get_by_username(user.username)
-    send_mail(u'%s - Aprovació' % org.name, u'Has estat aprovat a %s. Ara pots anar a https://%s/ i participar-hi!' % (org.name, org.domain), org.contact, [ user.email ], fail_silently=False)
+    msg = u"""Com a adherit del projecte pots participar a les primàries de %s.
+
+Entra a https://%s/identity/login/ i empra les següents credencials per a identificar-te:
+
+  - Usuari: %s
+  - Contrasenya: %s
+
+Gràcies per fer-nos confiança,
+%s
+"""
+    send_mail(u'Votació en línia de les Primàries de %s' % org.name, message % (org.name, org.domain, user.username, raw_password, org.name), org.contact, [ user.email ], fail_silently=False)

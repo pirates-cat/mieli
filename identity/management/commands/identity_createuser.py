@@ -21,6 +21,18 @@ class Command(MieliCommand):
             dest='email',
             help='E-mail used to identify and contact user',
             required=True)
+        self.register_option(
+            '--firstname',
+            dest='first_name',
+            help='')
+        self.register_option(
+            '--lastname',
+            dest='last_name',
+            help='')
+        self.register_option(
+            '--pid',
+            dest='pid',
+            help='')
 
     def invoke(self, *args, **options):
         domain = options.pop('organization')

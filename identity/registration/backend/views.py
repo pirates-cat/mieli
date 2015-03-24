@@ -30,6 +30,9 @@ class RegistrationView(BaseRegistrationView):
     def handle_pid(self, user, organization, **pid_data):
         return PID.objects.create(user=user, organization=organization, **pid_data)
 
+    def registration_allowed(self, request):
+        return request.organization.registration_open
+
     @transaction.atomic
     def register(self, request, **cleaned_data):
         # TODO extract to hook

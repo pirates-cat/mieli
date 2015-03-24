@@ -28,6 +28,7 @@ class Organization(models.Model):
     email_use_tls = models.BooleanField(default=True)
     email_use_ssl = models.BooleanField(default=False)
     web = models.URLField(blank=True)
+    registration_open = models.BooleanField(default=True)
 
     @property
     def domain(self):
@@ -76,4 +77,4 @@ class PID(models.Model):
     user = models.ForeignKey(User)
     organization = models.ForeignKey(Organization)
     value = models.CharField(max_length=10)
-    document = models.FileField(upload_to=get_upload_path)
+    document = models.FileField(upload_to=get_upload_path, blank=True)
