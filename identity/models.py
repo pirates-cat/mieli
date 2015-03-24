@@ -23,7 +23,7 @@ class Organization(models.Model):
     contact = models.EmailField(blank=True)
     email_host = models.CharField(max_length=100, validators=[_simple_domain_name_validator], blank=True)
     email_port = models.IntegerField(default=587)
-    email_host_user = models.CharField(max_length=30, blank=True)
+    email_host_user = models.CharField(max_length=50, blank=True)
     email_host_password = models.CharField(max_length=100, blank=True)
     email_use_tls = models.BooleanField(default=True)
     email_use_ssl = models.BooleanField(default=False)

@@ -21,7 +21,8 @@ class EmailBackend(BaseEmailBackend):
         super(EmailBackend, self).__init__(**kwargs)
 
     def _send(self, email_message):
-        if email_message.from_email == 'webmaster@localhost':
-            organization_ = helpers.get_current_organization()
-            email_message.from_email = organization_.contact
+        #if email_message.from_email == 'webmaster@localhost':
+        #    email_message.from_email = organization_.contact
+        organization_ = helpers.get_current_organization()
+        email_message.from_email = settings.DEFAULT_FROM_EMAIL = organization_.contact
         return super(EmailBackend, self)._send(email_message)

@@ -9,7 +9,7 @@ class Election(models.Model):
     title = models.CharField(max_length=140)
     nexus = models.ForeignKey(Nexus)
     description = models.TextField(blank=True)
-    slug = models.SlugField()
+    slug = models.SlugField(max_length=140)
 
     @property
     def questions(self):

@@ -1,6 +1,7 @@
 <div class="row">
   <div class="small-9 columns">
     <h2>{{ election.title }}</h2>
+    {% if election.description %}{{ election.description|safe }}{% endif %}
   </div>
   <div class="small-3 columns vote">
     <a class="button" href="/vote/{{election.slug}}">Vota (pots canviar el teu vot després)</a>
@@ -9,7 +10,7 @@
 {% for question in election.questions %}
 <div class="row">
   <div class="small-12 columns">
-    <h4>{{ question.description }}</h4>
+    <h4>{{ question.description|safe }}</h4>
   </div>
 </div>
 {% for option in question.options %}
@@ -23,8 +24,11 @@
   <div class="small-12 columns">
   {% endif %}
     <h5>{{ option.title }}</h5>
-    <p><a href="{% url 'media' path=option.document %}">Presentació</a></p>
-    {% if option.web %}<p><a href="{{option.web}}">Projecte polític</a></p>{% endif %}
+    {% if option.description %}<blockquote>{{option.description|safe}}</blockquote>{% endif %}
+    <ul class="candidate_links">
+    {% if option.document %}<li><a target="_blank" href="{% url 'media' path=option.document %}">Presentació</a></li>{% endif %}
+    {% if option.web %}<li><a target="_blank" href="{{option.web}}">Llegir més</a></li>{% endif %}
+    </ul>
   </div>
 </div>
 {% endfor %}

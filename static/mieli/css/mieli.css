@@ -121,3 +121,20 @@ footer .links a:hover {
 .option {
     padding-bottom: 0.5em;
 }
+
+.candidate_links {
+    list-style-none: none;
+    margin-left: 0;
+}
+
+.candidate_links li {
+    display: inline;
+}
+
+.candidate_links li:before {
+    content: " | ";
+}
+
+.candidate_links li:first-child:before {
+    content: none;
+}

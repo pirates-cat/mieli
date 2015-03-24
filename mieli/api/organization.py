@@ -40,9 +40,15 @@ def create(domain, name, **kwargs):
     site = Site(domain=domain, name=name)
     site.full_clean()
     site.save()
+    url = kwargs.pop('url') # hack
+    u = kwargs.pop('user') # hack
+    token = kwargs.pop('token') # hack
     organization = Organization(site=site, **kwargs)
     organization.full_clean()
     organization.save()
+    kwargs['url'] = url
+    kwargs['token'] = token
+    kwargs['user'] = u
     registry.signal('organization_create', organization=organization, **kwargs)
     return organization
 
