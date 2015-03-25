@@ -28,11 +28,14 @@ class Question(models.Model):
     # TODO add number (order)
 
     @property
-    def options(self):
+    def options(self, order='random'):
         ops = []
         for o in self.option_set.all():
             ops.append(o)
-        shuffle(ops)
+        if order == 'random':
+            shuffle(ops)
+        elif order == 'alpha':
+            pass
         return ops
 
     def __unicode__(self):

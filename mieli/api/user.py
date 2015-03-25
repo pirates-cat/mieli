@@ -27,11 +27,14 @@ def create(username, email, send_invitation=True, **qwargs):
     if get(username=username):
         raise Exception("user '%s' already exists" % username)
     org = organization.get_by_username(username)
-    query = { 'username__endswith': '@%s' % org.suffix, org.uid_field: kwargs[org.uid_field] }
+    query = { 'username__endswith': '@%s' % org.suffix }
+    if org.uid_field == 'pid':
+        query['pid__value'] = qwargs[org.uid_field]
     if get(**query):
         raise Exception("unique identifier field '%s' with value '%s' already exists" % (org.uid_field, kwargs[org.uid_field]))
-    raw_password = ''.join(random.choice(string.printable) for x in range(12))
+    raw_password = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for x in range(10))
     send_invitation = kwargs.pop('send_invitation')
+    _ = kwargs.pop('qwargs')
     user = User(**kwargs)
     user.set_password(raw_password)
     user.full_clean()
@@ -79,7 +82,9 @@ Entra a https://%s/identity/login/ i empra les següents credencials per a ident
   - Usuari: %s
   - Contrasenya: %s
 
+Et recomanem canviar la contrasenya a 'Canviar contrasenya'.
+
 Gràcies per fer-nos confiança,
 %s
 """
-    send_mail(u'Votació en línia de les Primàries de %s' % org.name, message % (org.name, org.domain, user.username, raw_password, org.name), org.contact, [ user.email ], fail_silently=False)
+    send_mail(u'Votació en línia de les Primàries de %s' % org.name, msg % (org.name, org.domain, user.username.split('@')[0], raw_password, org.name), org.contact, [ user.email ], fail_silently=False)

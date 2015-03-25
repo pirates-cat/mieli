@@ -2,6 +2,7 @@ from django.core.management.base import CommandError
 from mieli.api import user, organization
 from mieli.cli import MieliCommand
 from optparse import make_option
+from django.conf import settings
 
 class Command(MieliCommand):
     def __init__(self):
@@ -40,4 +41,5 @@ class Command(MieliCommand):
         if organization_ == None:
             raise CommandError('unknown organization')
         options['username'] = "%s@%s" % (options['username'], organization_.suffix)
+        settings.SITE_ID._set(int(organization_.site.pk))
         user.create(**options)

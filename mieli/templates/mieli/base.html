@@ -25,6 +25,7 @@
               {% if request.user.is_authenticated %}
               <li><a data-equalizer-watch href="#">{{request.user.username}}</a></li>
               {% if request.user.is_staff %}<li><a data-equalizer-watch href="{% url 'dashboard' %}">Gestió</a></li>{% endif %}
+              <li><a data-equalizer-watch href="{% url 'auth_password_change' %}">Canviar contrasenya</a></li>
               <li><a data-equalizer-watch href="{% url 'auth_logout' %}">Sortir</a></li>
               {% else %}
               {% if request.organization.registration_open %}<li><a data-equalizer-watch href="{% url 'registration_register' %}">Registra't</a></li>{% endif %}
@@ -63,7 +64,7 @@
           <h4>Programari</h4>
           <ul class="links">
             <li><a href="https://github.com/pirata-cat/mieli">GitHub</a></li>
-            <li><a href="http://pirata.cat/">Pirates de Catalunya</a></li>
+            {% if request.organization.promotion %}<li><a href="http://pirata.cat/">Pirates de Catalunya</a></li>{% endif %}
           </ul>
         </div>
       </div>

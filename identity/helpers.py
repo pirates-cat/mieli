@@ -25,6 +25,7 @@ def clean_extra_fields(form, **kwargs):
     if organization.uid_field == 'pid':   
         if not 'pid_number' in form.cleaned_data:
             form.add_error('pid_number', _('DNI no vàlid'))
+            return
         value = re.sub('[^A-Z0-9]', '', form.cleaned_data['pid_number'].upper())
         try:
             PID.objects.get(organization=organization, value=value)

@@ -29,6 +29,7 @@ class Organization(models.Model):
     email_use_ssl = models.BooleanField(default=False)
     web = models.URLField(blank=True)
     registration_open = models.BooleanField(default=True)
+    promotion = models.BooleanField(default=True)
 
     @property
     def domain(self):
