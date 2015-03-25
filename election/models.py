@@ -34,8 +34,8 @@ class Question(models.Model):
             ops.append(o)
         if order == 'random':
             shuffle(ops)
-        elif order == 'alpha':
-            pass
+        elif hasattr(Option(), order):
+            ops.sort(key=lambda v: getattr(v, order))
         return ops
 
     def __unicode__(self):
