@@ -1,15 +1,15 @@
 <div class="row">
-  <div class="small-9 columns">
+  <div class="small-9 columns description">
     <h2>{{ election.title }}</h2>
     {% if election.description %}{{ election.description|safe }}{% endif %}
   </div>
   <div class="small-3 columns vote">
-    <a class="button" href="/vote/{{election.slug}}">Vota (pots canviar el teu vot després)</a>
-  </div>
+    {% if election.active %}<a class="button" href="/vote/{{election.slug}}">Vota (pots canviar el teu vot després)</a>{% else %}<a class="button" href="/vote/{{election.slug}}/result/">Resultats de la votació en línia</a>{% endif %}
+  </div> 
 </div>
 {% for question in election.questions %}
 <div class="row">
-  <div class="small-12 columns">
+  <div class="small-12 columns question">
     <h4>{{ question.description|safe }}</h4>
   </div>
 </div>

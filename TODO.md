@@ -12,6 +12,7 @@
 - Autologin link (for census tool)
 - Census tool integration
 - i18n
+- handle @ in username input
 
 ## Low priority
 

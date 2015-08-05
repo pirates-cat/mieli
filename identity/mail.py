@@ -10,7 +10,7 @@ class EmailBackend(BaseEmailBackend):
         kwargs['fail_silently'] = fail_silently
         organization_ = helpers.get_current_organization()
         kwargs['host'] = host or organization_.email_host
-        kwargs['password'] = password or organization_.email_host_password
+        kwargs['password'] = str(password or organization_.email_host_password)
         kwargs['username'] = username or organization_.email_host_user
         kwargs['port'] = port or organization_.email_port
         kwargs['use_ssl'] = use_ssl or organization_.email_use_ssl

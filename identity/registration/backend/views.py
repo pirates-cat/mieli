@@ -75,4 +75,4 @@ class ApproveView(TemplateView):
         return redirect('dashboard')
 
     def approve(self, request, user_pk):
-        registry.signal('user_approval', user=user.get(pk=user_pk))
+        registry.signal('user_approval', user=user.get(pk=user_pk), send_invitation=True)

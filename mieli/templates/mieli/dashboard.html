@@ -7,10 +7,4 @@
 {% block content %}
 <h2>Usuaris pendents de validar</h2>
 {% render_table users %}
-<h2>DNIs votants</h2>
-<ul>
-{% for member in request.organization.main_nexus.users.all %}
-<li>{{member.pid_set.get.value}}</li>
-{% endfor %}
-</ul>
 {% endblock %}

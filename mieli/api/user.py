@@ -75,7 +75,7 @@ def send_approve_email(**kwargs):
     if 'raw_password' in kwargs:
         raw_password = kwargs['raw_password']
     org = organization.get_by_username(user.username)
-    msg = u"""Com a adherit del projecte pots participar a les primàries de %s.
+    msg = u"""Com a membre de %s pots participar en les primàries obertes.
 
 Entra a https://%s/identity/login/ i empra les següents credencials per a identificar-te:
 

@@ -10,6 +10,7 @@ class Election(models.Model):
     nexus = models.ForeignKey(Nexus)
     description = models.TextField(blank=True)
     slug = models.SlugField(max_length=140)
+    active = models.BooleanField(default=True)
 
     @property
     def questions(self):
@@ -25,17 +26,18 @@ def get_upload_path(instance, file_):
 class Question(models.Model):
     election = models.ForeignKey(Election)
     description = models.TextField()
+    order = models.CharField(max_length=30, default='random')
     # TODO add number (order)
 
     @property
-    def options(self, order='random'):
+    def options(self):
         ops = []
         for o in self.option_set.all():
             ops.append(o)
-        if order == 'random':
+        if self.order == 'random':
             shuffle(ops)
-        elif hasattr(Option(), order):
-            ops.sort(key=lambda v: getattr(v, order))
+        elif hasattr(Option(), self.order):
+            ops.sort(key=lambda v: getattr(v, self.order))
         return ops
 
     def __unicode__(self):

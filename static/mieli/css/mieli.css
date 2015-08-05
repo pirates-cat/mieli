@@ -138,3 +138,13 @@ footer .links a:hover {
 .candidate_links li:first-child:before {
     content: none;
 }
+
+.description {
+    padding-bottom: 1em;
+}
+
+.question h4 {
+    color: #572B85;
+    padding-top: 0.5em;
+    text-decoration: underline;
+}
