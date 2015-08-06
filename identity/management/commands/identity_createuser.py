@@ -3,6 +3,7 @@ from mieli.api import user, organization
 from mieli.cli import MieliCommand
 from optparse import make_option
 from django.conf import settings
+from mieli import registry
 
 class Command(MieliCommand):
     def __init__(self):
