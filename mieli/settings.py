@@ -43,6 +43,7 @@ FIRST_PARTY_APPS = (
     'identity',
     'agora',
     'election',
+    'geo',
 )
 
 THIRD_PARTY_APPS = (

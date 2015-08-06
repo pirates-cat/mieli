@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Admin1Codes(models.Model):
     code = models.CharField(max_length=11, blank=True)
@@ -102,3 +103,10 @@ class Languagecodes(models.Model):
 
     class Meta:
         db_table = 'languagecodes'
+
+class Location(models.Model):
+    user = models.ForeignKey(User)
+    admin1 = models.ForeignKey(Admin1Codes)
+    admin2 = models.ForeignKey(Admin2Codes)
+    place = models.ForeignKey(Geoname)
+

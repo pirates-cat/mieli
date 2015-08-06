@@ -1,19 +1,13 @@
 # -*- coding: utf-8 -*-
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.sites.models import Site
-from django.conf import settings
 from identity.models import PID
+from mieli import helpers
 from django import forms
 import re
 
-def get_current_organization():
-    sid = settings.SITE_ID
-    site = Site.objects.get(pk=sid)
-    return site.organization_set.get()
-
 def set_extra_fields(form, **kwargs):
     fields = form.fields
-    organization = get_current_organization()
+    organization = helpers.get_current_organization()
     fields['first_name'] = forms.CharField(label=_('Nom'), max_length=30)
     fields['last_name'] = forms.CharField(label=_('Cognoms'), max_length=30)
     if organization.uid_field == 'pid':
@@ -21,7 +15,7 @@ def set_extra_fields(form, **kwargs):
         fields['pid_upload'] = forms.FileField(label=_(u'Còpia del DNI (ambdues cares)'))
 
 def clean_extra_fields(form, **kwargs):
-    organization = get_current_organization()
+    organization = helpers.get_current_organization()
     if organization.uid_field == 'pid':   
         if not 'pid_number' in form.cleaned_data:
             form.add_error('pid_number', _('DNI no vàlid'))

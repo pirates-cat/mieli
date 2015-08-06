@@ -44,7 +44,7 @@ def create(username, email, send_invitation=True, **qwargs):
         pid = PID(user=user, organization=org, value=value)
         pid.full_clean()
         pid.save()
-    registry.signal('user_create', user=user)
+    registry.signal('user_create', user=user, **qwargs)
     registry.signal('user_approval', user=user, send_invitation=send_invitation, raw_password=raw_password)
 
 @transaction.atomic

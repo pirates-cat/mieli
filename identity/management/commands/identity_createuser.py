@@ -34,6 +34,7 @@ class Command(MieliCommand):
             '--pid',
             dest='pid',
             help='')
+        registry.apply_filter('createuser_cli_options', command=self)
 
     def invoke(self, *args, **options):
         domain = options.pop('organization')

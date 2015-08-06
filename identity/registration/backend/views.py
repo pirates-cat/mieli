@@ -44,7 +44,7 @@ class RegistrationView(BaseRegistrationView):
         new_user.first_name = cleaned_data['first_name']
         new_user.last_name = cleaned_data['last_name']
         new_user.save()
-        registry.signal('user_create', user=new_user)
+        registry.signal('user_create', user=new_user, **cleaned_data)
         if len(pid_data) > 0:
             self.handle_pid(new_user, request.organization, **pid_data)
         return new_user
