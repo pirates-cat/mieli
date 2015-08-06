@@ -1,4 +1,4 @@
-from identity.helpers import get_current_organization
+from mieli.helpers import get_current_organization
 from django.utils.safestring import mark_safe
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User

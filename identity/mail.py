@@ -1,6 +1,6 @@
 from django.core.mail.backends.smtp import EmailBackend as BaseEmailBackend
 from django.conf import settings
-from identity import helpers
+from mieli import helpers
 
 class EmailBackend(BaseEmailBackend):
     def __init__(self, host=None, port=None, username=None, password=None,

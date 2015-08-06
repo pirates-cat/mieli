@@ -2,8 +2,7 @@ from registration.forms import RegistrationForm as BaseRegistrationForm
 from django.contrib.auth.forms import AuthenticationForm
 from crispy_forms_foundation.layout import Submit
 from crispy_forms.helper import FormHelper
-from identity import helpers
-from mieli import registry
+from mieli import registry, helpers
 
 class RegistrationForm(BaseRegistrationForm):
     def __init__(self, *args, **kwargs):
