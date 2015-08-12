@@ -10,7 +10,7 @@ from crispy_forms.helper import FormHelper
 from django.shortcuts import redirect
 from django.db import transaction
 from django.conf import settings
-from identity.models import PID
+from identity.api import pid
 from mieli.api import user
 from mieli import registry
 
@@ -28,7 +28,7 @@ class RegistrationView(BaseRegistrationView):
         return super(RegistrationView, self).post(request, *args, **kwargs)
 
     def handle_pid(self, user, organization, **pid_data):
-        return PID.objects.create(user=user, organization=organization, **pid_data)
+        return pid.set(user, organization, **pid_data)
 
     def registration_allowed(self, request):
         return request.organization.registration_open
