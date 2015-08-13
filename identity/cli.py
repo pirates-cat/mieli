@@ -32,7 +32,7 @@ class IdentityUserCommand(MieliCommand):
             options['email'] = self.email
         elif options['email']:
             self.email = options['email']
-            self.user = user.get(email=self.email)
+            self.user = user.get_from_organization(self.organization, email=self.email)
             if self.user == None:
                 raise CommandError('unknown user')
             options['username'] = self.user.username

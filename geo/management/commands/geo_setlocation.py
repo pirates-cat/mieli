@@ -8,8 +8,8 @@ class Command(IdentityUserCommand):
     def __init__(self):
         super(self.__class__, self).__init__()
         self.register_option(
-            '--name',
-            dest='name',
+            '--location',
+            dest='location',
             help='Location name',
             required=True)
         self.register_option(
@@ -19,8 +19,9 @@ class Command(IdentityUserCommand):
             required=True)
 
     def invoke(self, *args, **options):
-        name = options['name']
+        name = options['location']
         result = location.find(name, options['country'])
         if len(result) == 0:
-            raise CommandError("no location find by name '%s' for '%s'" % (name, username))
+            raise CommandError("no location find by name '%s' for '%s'" % (name, self.username))
+        print("%s -> %s", (self.user, name))
         location.save(self.user, result[0])

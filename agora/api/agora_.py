@@ -26,7 +26,7 @@ def create(nexus, **kwargs):
     kwargs['short_description'] = nexus.name
     kwargs['is_vote_secret'] = True
     kwargs['__auth'] = True
-    link_ = link.get(organization=nexus.organization)
+    link_ = link.get(organization=nexus.organization, user='agora')
     avr = link_.post('agora', **kwargs)
     options = {}
     options['agora'] = avr['name']

@@ -18,6 +18,9 @@ def get(**kwargs):
 def all(**kwargs):
     return User.objects.all(**kwargs)
 
+def get_from_organization(org, **kwargs):
+    return get(username__endswith='@%s' % org.suffix, **kwargs)
+
 def from_organization(org, **kwargs):
     return User.objects.filter(username__endswith='@%s' % org.suffix, **kwargs)
 
