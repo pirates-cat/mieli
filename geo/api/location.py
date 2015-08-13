@@ -36,3 +36,4 @@ def save(user, place, administrative_division_id=None):
     location = Location(user=user, admin1=admin1, admin2=admin2, place=place)
     location.full_clean()
     location.save()
+    return location

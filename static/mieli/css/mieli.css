@@ -144,7 +144,10 @@ footer .links a:hover {
 }
 
 .question h4 {
+    font-weight: 800;
+}
+
+.option h5 {
     color: #572B85;
-    padding-top: 0.5em;
-    text-decoration: underline;
+    font-weight: 600;
 }

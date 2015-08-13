@@ -5,6 +5,7 @@ from agora.api import agora_, user as agora_user # TODO <- this shouldn't be her
 from django_tables2 import RequestConfig
 from identity.tables import UserTable
 from django.shortcuts import render, redirect
+from election.models import Election
 from django.conf import settings
 from mieli.api import user
 import cookies
@@ -23,7 +24,13 @@ def featured(request):
 
 @login_required(login_url='auth_login')
 def vote(request, path):
-    nexus = request.organization.main_nexus
+    try:
+        election = Election.objects.get(slug=path, active=True, nexus__organization=request.organization)
+    except Election.DoesNotExist:
+        raise Http404('Vote does not exist.')
+    nexus = election.nexus
+    if nexus not in request.user.nexus_set.all():
+        return render(request, 'mieli/unauthorized_voter.html')
     n_agora = agora_.get_by_nexus(nexus)
     booth = '%s/%s/election/%s/vote' % (settings.AGORA_ADMIN_USER, n_agora.agora, path)
     try:

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.utils.translation import ugettext_lazy as _
 from geo.api import location
+from mieli.api import nexus
 from django import forms
 import re
 
@@ -57,4 +58,8 @@ def on_user_creation(user, **kwargs):
     administrative_division_id = None
     if 'administrative_division' in kwargs:
         administrative_division_id = kwargs['administrative_division']
-    location.save(user, place, administrative_division_id)
+    l = location.save(user, place, administrative_division_id)
+    nexus_ = nexus.get(name=l.admin2.name.split(' ')[-1])
+    if nexus_ == None:
+        raise Exception("Nexus not found for '%s'" % l.admin2.name)
+    nexus_.join(user)

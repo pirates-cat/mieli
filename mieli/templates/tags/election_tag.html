@@ -1,10 +1,12 @@
+{% if election %}
+{% if not only_button %}
 <div class="row">
   <div class="small-9 columns description">
     <h2>{{ election.title }}</h2>
     {% if election.description %}{{ election.description|safe }}{% endif %}
   </div>
   <div class="small-3 columns vote">
-    {% if election.active %}<a class="button" href="/vote/{{election.slug}}">Vota (pots canviar el teu vot després)</a>{% else %}<a class="button" href="/vote/{{election.slug}}/result/">Resultats de la votació en línia</a>{% endif %}
+    {% if election.active %}<a target="_blank" class="button" href="/vote/{{election.slug}}">Vota (pots canviar el teu vot després)</a>{% else %}<a class="button" href="/vote/{{election.slug}}/result/">Resultats de la votació en línia</a>{% endif %}
   </div> 
 </div>
 {% for question in election.questions %}
@@ -35,6 +37,14 @@
 {% endfor %}
 <div class="row">
   <div class="small-12 columns vote">
-    <a class="button" href="/vote/{{election.slug}}">Vota (pots canviar el teu vot després)</a>
+    {% if election.active %}<a target="_blank" class="button" href="/vote/{{election.slug}}">Vota (pots canviar el teu vot després)</a>{% else %}<a class="button" href="/vote/{{election.slug}}/result/">Resultats de la votació en línia</a>{% endif %}
   </div>
 </div>
+{% else %}
+<div class="row">
+  <div class="small-12 columns vote">
+    {% if election.active %}<a target="_blank" class="button" href="/vote/{{election.slug}}">{{election.title}}</a>{% else %}<a class="button" href="/vote/{{election.slug}}/result/">Resultats de la votació "{{election.title}}"</a>{% endif %}
+  </div>
+</div>
+{% endif %}
+{% endif %}
