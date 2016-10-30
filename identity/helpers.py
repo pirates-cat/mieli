@@ -22,8 +22,9 @@ def clean_extra_fields(form, **kwargs):
         if not 'pid_number' in form.cleaned_data:
             form.add_error('pid_number', _('DNI no vàlid'))
             return
+        value = form.cleaned_data['pid_number']
         try:
             pid.get(organization, value)
             form.add_error('pid_number', _(u'DNI ja registrat.'))
         except PID.DoesNotExist:
-            form.cleaned_data['pid_number'] = value
+            form.cleaned_data['pid_number'] = pid.clean(value)

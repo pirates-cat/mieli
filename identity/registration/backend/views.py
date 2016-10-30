@@ -30,8 +30,9 @@ class RegistrationView(BaseRegistrationView):
     def handle_pid(self, user, organization, **pid_data):
         return pid.set(user, organization, **pid_data)
 
-    def registration_allowed(self, request):
-        return request.organization.registration_open
+    def registration_allowed(self):
+        return False
+        #return request.organization.registration_open
 
     @transaction.atomic
     def register(self, request, **cleaned_data):

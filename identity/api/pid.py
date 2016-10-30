@@ -17,8 +17,16 @@ def set(user, organization, value, document=None):
         pid.save()
     return pid
 
+def clean(value):
+    return re.sub('[^A-Z0-9]', '', value.upper())
+
 def get(organization, value=None):
     if organization.uid_field != 'pid':   
         raise Exception("organization '%s' doesn't use personal identification as UID: current UID '%s'" % (organization.name, organization.uid_field))
-    value = re.sub('[^A-Z0-9]', '', value.upper())
+    value = clean(value)
     return PID.objects.get(organization=organization, value=value)
+
+def get_by_user(organization, user):
+    if organization.uid_field != 'pid':   
+        raise Exception("organization '%s' doesn't use personal identification as UID: current UID '%s'" % (organization.name, organization.uid_field))
+    return PID.objects.get(organization=organization, user=user)

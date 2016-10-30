@@ -5,11 +5,10 @@ from identity.registration.backend.forms import LoginForm
 from django.contrib.auth import views as auth_views
 from django.views.generic.base import TemplateView
 from django.core.urlresolvers import reverse_lazy
-from django.conf.urls import patterns
 from django.conf.urls import include
 from django.conf.urls import url
 
-urlpatterns = patterns('',
+urlpatterns = [
                        url(r'^activate/complete/$',
                            TemplateView.as_view(template_name='registration/activation_complete.html'),
                            name='registration_activation_complete'),
@@ -61,4 +60,4 @@ urlpatterns = patterns('',
                        url(r'^approve/(?P<user_pk>[0-9]+)/$',
                            ApproveView.as_view(),
                            name='auth_approve'),
-                       )
+]

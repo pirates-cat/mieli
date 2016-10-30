@@ -3,7 +3,6 @@ THIS IS AN AUTO-GENERATED FILE. CHANGES YOU MAKE HERE WILL BE OVERWRITTEN
 IF YOU WANT TO INTRODUCE MODIFICATIONS EDIT THE settings.py.j2 FILE
 LOCATED IN THE deploy/roles/application/templates/django DIRECTORY.
 """
-
 import os
 from datetime import timedelta
 
@@ -74,17 +73,26 @@ MIDDLEWARE_CLASSES = (
 
 #Template context processors
 DEFAULT_TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.template.context_processors.debug",
+    "django.template.context_processors.request",
     "django.contrib.auth.context_processors.auth",
     "django.contrib.messages.context_processors.messages",
-    "django.core.context_processors.media",
-    "django.core.context_processors.static",
-    "django.core.context_processors.debug",
-    "django.core.context_processors.request",
 )
 
 CUSTOM_TEMPLATE_CONTEXT_PROCESSORS = ()
 
 TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_TEMPLATE_CONTEXT_PROCESSORS + CUSTOM_TEMPLATE_CONTEXT_PROCESSORS
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': TEMPLATE_CONTEXT_PROCESSORS,
+        },
+    },
+]
 
 
 # Email backend
@@ -119,6 +127,39 @@ DATABASES = {
 #  Optimizes read heavy PG workload, install only if PG
 if 'postgresql_psycopg2' == 'postgresql_psycopg2':
     DATABASES['default']['OPTIONS'] = {'autocommit': True}
+
+# Password storage
+# https://docs.djangoproject.com/es/1.10/topics/auth/passwords/#auth-password-storage
+
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'mieli.hashers.LDAPSHA1PasswordHasher',
+    'django.contrib.auth.hashers.UnsaltedSHA1PasswordHasher',
+    'django.contrib.auth.hashers.UnsaltedMD5PasswordHasher'
+]
+
+# Password validation
+# https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
+
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME':
+        'django.contrib.auth.password_validation.'
+        'UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME':
+        'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME':
+        'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME':
+        'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
 
 
 # Internationalization
@@ -189,6 +230,3 @@ try:
     from mieli.custom_settings import *
 except ImportError:
     pass
-
-from mieli import registry
-registry.autodiscover()

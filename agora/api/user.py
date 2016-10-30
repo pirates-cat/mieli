@@ -16,6 +16,7 @@ def create(user, **kwargs):
     kwargs['password1'] = kwargs['password2'] = settings.AGORA_DEFAULT_KEY
     kwargs['email'] = user.email
     kwargs['first_name'] = 'Mieli user'
+    kwargs['__auth'] = True
     r = lnk.post('user/register', **kwargs)
     if 'errors' in r:
         raise Exception(r['errors'])

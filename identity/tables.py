@@ -8,7 +8,10 @@ import django_tables2 as tables
 class UserTable(tables.Table):
     pid = tables.Column(accessor='id', verbose_name='PID', empty_values=())
     auth = tables.Column(accessor='id', verbose_name='Authorize', empty_values=())
-    organization = get_current_organization()
+
+    @property
+    def organization(self):
+        return get_current_organization()
 
     def render_pid(self, value):
         try:

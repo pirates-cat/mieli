@@ -23,5 +23,4 @@ class Command(IdentityUserCommand):
         result = location.find(name, options['country'])
         if len(result) == 0:
             raise CommandError("no location find by name '%s' for '%s'" % (name, self.username))
-        print("%s -> %s", (self.user, name))
         location.save(self.user, result[0])
